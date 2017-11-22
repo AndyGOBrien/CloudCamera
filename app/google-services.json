@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "939749751724",
+    "firebase_url": "https://cloud-camera-a8b80.firebaseio.com",
+    "project_id": "cloud-camera-a8b80",
+    "storage_bucket": "cloud-camera-a8b80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939749751724:android:27ec96da6262e1f8",
+        "android_client_info": {
+          "package_name": "com.llamalabb.cloudcamera"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939749751724-ugs9fobe1gbc443ti35ohivtiup1tcka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.llamalabb.cloudcamera",
+            "certificate_hash": "9a4a9cdd223a14f37db51152dd74ad1014ee4f44"
+          }
+        },
+        {
+          "client_id": "939749751724-78eo5dlh0hil4amsl2tb3qnlhlv3qgvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdEuHnYZJB92n9FhbqPsb4HVhSBQUrmFg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939749751724-78eo5dlh0hil4amsl2tb3qnlhlv3qgvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
