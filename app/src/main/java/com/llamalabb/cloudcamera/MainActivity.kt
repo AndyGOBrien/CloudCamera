@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
-import com.llamalabb.cloudcamera.auth.LoginActivity
+import com.llamalabb.cloudcamera.auth.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 

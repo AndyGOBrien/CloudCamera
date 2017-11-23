@@ -8,34 +8,36 @@ import com.llamalabb.simplefirebaselogin.BaseView
  */
 interface AuthContract {
 
-    interface AuthView: BaseView<Presenter> {
+    interface AuthView {
 
         fun showFailure(msg: String)
         fun showSuccess()
         fun showLinkClicked()
         fun googleSignInButtonClicked()
 
-        interface Login : AuthView{
+        interface Login: AuthView, BaseView<LoginPresenter>{
             fun loginButtonClicked()
             fun showRegisterView()
         }
 
-        interface Register : AuthView{
-
+        interface Register: AuthView, BaseView<RegisterPresenter>{
+            fun registerButtonClicked()
         }
     }
 
-    interface Presenter : BasePresenter, LoginPresenter, RegisterPresenter {
+
+
+    interface Presenter : BasePresenter {
         fun showHideText()
     }
 
-    interface LoginPresenter {
+    interface LoginPresenter : Presenter {
         fun loginUser(email: String, password: String)
         fun showRegisterView()
 
     }
 
-    interface RegisterPresenter {
+    interface RegisterPresenter : Presenter {
         fun registerUser(email: String, password: String, confirm: String)
     }
 
