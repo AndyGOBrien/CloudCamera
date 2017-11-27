@@ -1,5 +1,7 @@
 package com.llamalabb.cloudcamera.auth
 
+import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.llamalabb.simplefirebaselogin.BasePresenter
 import com.llamalabb.simplefirebaselogin.BaseView
 
@@ -22,6 +24,7 @@ interface AuthContract {
 
         interface Register: AuthView, BaseView<RegisterPresenter>{
             fun registerButtonClicked()
+            fun showLoginView()
         }
     }
 
@@ -29,16 +32,18 @@ interface AuthContract {
 
     interface Presenter : BasePresenter {
         fun showHideText()
+        fun handleShowLinkClicked()
+        fun loginWithGoogle(account: GoogleSignInAccount)
     }
 
     interface LoginPresenter : Presenter {
-        fun loginUser(email: String, password: String)
+        fun handleLoginButtonClicked(email: String, password: String)
         fun showRegisterView()
 
     }
 
     interface RegisterPresenter : Presenter {
-        fun registerUser(email: String, password: String, confirm: String)
+        fun handleRegisterButtonClicked(email: String, password: String, confirm: String)
     }
 
 }

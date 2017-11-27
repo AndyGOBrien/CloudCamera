@@ -12,12 +12,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         FirebaseAuth.getInstance().currentUser?.let{
 
         } ?: startLoginActivity()
     }
 
-    fun startLoginActivity(){
+    private fun startLoginActivity(){
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
