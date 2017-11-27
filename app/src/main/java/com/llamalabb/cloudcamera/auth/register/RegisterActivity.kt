@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
 
     }
 
-    override fun showLinkClicked() {
+    override fun showHidePasswordText() {
 
     }
 

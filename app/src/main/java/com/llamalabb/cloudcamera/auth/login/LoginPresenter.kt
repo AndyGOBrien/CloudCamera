@@ -7,7 +7,7 @@ import com.llamalabb.cloudcamera.auth.AuthPresenter
 /**
  * Created by andy on 11/23/17.
  */
-class LoginPresenter(loginView: AuthView.Login) :
+class LoginPresenter(val loginView: AuthView.Login) :
         AuthContract.LoginPresenter,
         AuthPresenter(loginView) {
 
@@ -16,6 +16,6 @@ class LoginPresenter(loginView: AuthView.Login) :
     }
 
     override fun showRegisterView() {
-
+        loginView.showRegisterView()
     }
 }

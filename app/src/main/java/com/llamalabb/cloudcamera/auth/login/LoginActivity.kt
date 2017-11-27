@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
             when(v) {
                 register_frame -> presenter.showRegisterView()
 
-                show_hide_link -> showLinkClicked()
+                show_hide_link -> presenter.showHideText()
             }
         }
 
@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
         startActivity(Intent(this, RegisterActivity::class.java))
     }
 
-    override fun showLinkClicked(){
+    override fun showHidePasswordText(){
         if(show_hide_link.text == "show") {
             show_hide_link.text = "hide"
             password_editText.transformationMethod = null

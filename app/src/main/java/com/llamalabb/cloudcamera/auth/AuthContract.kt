@@ -12,7 +12,7 @@ interface AuthContract {
 
         fun showFailure(msg: String)
         fun showSuccess()
-        fun showLinkClicked()
+        fun showHidePasswordText()
         fun googleSignInButtonClicked()
 
         interface Login: AuthView, BaseView<LoginPresenter>{
