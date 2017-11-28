@@ -14,8 +14,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        FirebaseAuth.getInstance().currentUser?.let{
-
+        FirebaseAuth.getInstance().currentUser?.let{ user ->
+            FirebaseAuth.getInstance().signOut()
+            startLoginActivity()
         } ?: startLoginActivity()
     }
 

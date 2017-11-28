@@ -1,6 +1,5 @@
 package com.llamalabb.cloudcamera.auth.login
 
-import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.AuthContract.AuthView
@@ -10,7 +9,7 @@ import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 /**
  * Created by andy on 11/23/17.
  */
-class LoginPresenter(val loginView: AuthView.Login) :
+class LoginPresenter(private val loginView: AuthView.Login) :
         AuthContract.LoginPresenter,
         AuthPresenter(loginView),
         MyFirebaseAuth.LoginCallBack{
@@ -20,9 +19,8 @@ class LoginPresenter(val loginView: AuthView.Login) :
     }
 
     override fun accountLoginFailure(msg: String?) {
-        msg?.let{
-            loginView.showFailure(it)
-        } ?: loginView.showFailure("Unknown Login Error")
+        msg?.let{ loginView.showFailure(it)
+            } ?: loginView.showFailure("Unknown Login Error")
     }
 
     override fun loginWithGoogle(account: GoogleSignInAccount) {
@@ -38,6 +36,6 @@ class LoginPresenter(val loginView: AuthView.Login) :
     }
 
     private fun loginUser(email: String, password: String) {
-
+        MyFirebaseAuth.loginUser(email, password, this)
     }
 }

@@ -1,6 +1,5 @@
 package com.llamalabb.cloudcamera.auth
 
-import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.llamalabb.simplefirebaselogin.BasePresenter
 import com.llamalabb.simplefirebaselogin.BaseView
@@ -23,8 +22,9 @@ interface AuthContract {
         }
 
         interface Register: AuthView, BaseView<RegisterPresenter>{
-            fun registerButtonClicked()
             fun showLoginView()
+            fun showComplexityStatus(complexityParam: Int, isComplex: Boolean)
+            fun showEmailValidity(isValidEmail: Boolean)
         }
     }
 
@@ -44,6 +44,8 @@ interface AuthContract {
 
     interface RegisterPresenter : Presenter {
         fun handleRegisterButtonClicked(email: String, password: String, confirm: String)
+        fun checkPasswordComplexityDynamic(pw: CharSequence?)
+        fun checkEmailValidity(email: CharSequence?)
     }
 
 }

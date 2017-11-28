@@ -7,19 +7,52 @@
     tools:context="com.llamalabb.cloudcamera.auth.register.RegisterActivity">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/email_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <EditText
+            android:id="@+id/email_editText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="email"
+            android:inputType="textEmailAddress"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toStartOf="@+id/pw_complexity_frame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_card">
 
         <EditText
             android:id="@+id/password_editText"
@@ -65,41 +98,6 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView1" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-        <EditText
-            android:id="@+id/email_editText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginStart="15dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:gravity="center_vertical"
-            android:hint="email"
-            android:inputType="textEmailAddress"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
         android:id="@+id/cardView1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -134,7 +132,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="105dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -197,6 +195,55 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/pw_complexity_frame"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/img_has_lower"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_margin="1dp"
+            app:srcCompat="@drawable/red_x" />
+
+        <ImageView
+            android:id="@+id/img_has_upper"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_margin="1dp"
+            app:srcCompat="@drawable/red_x" />
+
+        <ImageView
+            android:id="@+id/img_has_digit"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_margin="1dp"
+            app:srcCompat="@drawable/red_x" />
+
+        <ImageView
+            android:id="@+id/img_has_spchr"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_margin="1dp"
+            app:srcCompat="@drawable/red_x" />
+
+        <ImageView
+            android:id="@+id/img_has_length"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_margin="1dp"
+            app:srcCompat="@drawable/red_x" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/register_frame"
