@@ -2,6 +2,7 @@
   <dictionary name="andy">
     <words>
       <w>firebase</w>
+      <w>regexes</w>
     </words>
   </dictionary>
 </component>

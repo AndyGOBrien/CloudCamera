@@ -4,8 +4,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.AuthContract.AuthView
 import com.llamalabb.cloudcamera.auth.AuthPresenter
+import com.llamalabb.cloudcamera.ktfiles.*
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth
-import com.llamalabb.cloudcamera.utils.*
 
 
 /**
@@ -27,7 +27,6 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
         } else if(password != confirm) {
             registerView.showFailure("Passwords do not match")
         }
-
     }
 
     private fun registerUser(email: String, password: String) {
@@ -44,32 +43,22 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
 
     override fun checkEmailValidity(email: CharSequence?) {
         email?.let{
-            with(registerView) {
-                if (it.contains(emailValidityParam)) {
-                    showEmailValidity(true)
-                } else {
-                    showEmailValidity(false)
-                }
+            when {
+                ComplexityParams.Email.passes(it) -> registerView.showEmailValidity(true)
+                else -> registerView.showEmailValidity(false)
             }
         }
     }
 
-    override fun checkPasswordComplexityDynamic(pw: CharSequence?){
-        val complexityParams = arrayOf(lower, upper, digit, spchr)
-
-        pw?.let {
-            for (param in 0 until complexityParams.size) {
-                val hasCharComplexity = it.contains(complexityParams[param])
-                registerView.showComplexityStatus(param, hasCharComplexity)
-            }
-            val lengthComplexity = it.length in minPassLength..maxPassLength
-            registerView.showComplexityStatus(-1, lengthComplexity)
-        }
+    override fun checkPasswordComplexityDynamic(pw: CharSequence){
+        listOf(
+                ComplexityParams.Lower,
+                ComplexityParams.Upper,
+                ComplexityParams.Digit,
+                ComplexityParams.Spchr,
+                ComplexityParams.Length
+        ).forEach { registerView.showComplexityStatus(it, it.passes(pw))}
     }
 
-    private fun isPasswordComplex(password: CharSequence) : Boolean{
-
-        return password.contains(passComplexity) && password.length <= maxPassLength
-    }
-
+    private fun isPasswordComplex(password: CharSequence) = ComplexityParams.CompletePassword.passes(password)
 }

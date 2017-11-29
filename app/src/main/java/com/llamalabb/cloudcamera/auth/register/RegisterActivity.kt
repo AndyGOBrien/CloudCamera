@@ -4,8 +4,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.View.*
@@ -14,9 +12,10 @@ import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
-import com.llamalabb.cloudcamera.R
+import com.llamalabb.cloudcamera.*
 import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.login.LoginActivity
+import com.llamalabb.cloudcamera.ktfiles.*
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -39,12 +38,16 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
                 login_frame -> showLoginView()
                 show_hide_link -> presenter.handleShowLinkClicked()
                 register_button -> registerButtonClicked()
+                google_signin_button -> googleSignInButtonClicked()
             }
         }
 
         register_frame.setOnClickListener(onClickListener)
         show_hide_link.setOnClickListener(onClickListener)
         register_button.setOnClickListener(onClickListener)
+        google_signin_button.setOnClickListener(onClickListener)
+
+        google_signin_button.setOnClickListener {  }
     }
 
     override fun showLoginView(){
@@ -71,14 +74,24 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
         }
     }
 
-    override fun showComplexityStatus(complexityParam: Int, isComplex: Boolean){
+    override fun showComplexityStatus(complexityParam: ComplexityParams, isComplex: Boolean){
         when(complexityParam){
-            0 -> setImgComplexity(img_has_lower, isComplex)
-            1 -> setImgComplexity(img_has_upper, isComplex)
-            2 -> setImgComplexity(img_has_digit, isComplex)
-            3 -> setImgComplexity(img_has_spchr, isComplex)
-            else -> setImgComplexity(img_has_length, isComplex)
+            is ComplexityParams.Lower -> setImgComplexity(img_has_lower, isComplex)
+            is ComplexityParams.Upper -> setImgComplexity(img_has_upper, isComplex)
+            is ComplexityParams.Digit -> setImgComplexity(img_has_digit, isComplex)
+            is ComplexityParams.Spchr -> setImgComplexity(img_has_spchr, isComplex)
+            is ComplexityParams.Length -> setImgComplexity(img_has_length, isComplex)
         }
+    }
+
+    private fun setImgComplexity(img: ImageView, isComplex: Boolean){
+        when(isComplex){
+            true -> img.setImageDrawable(ContextCompat
+                    .getDrawable(applicationContext,R.drawable.green_check_mark))
+            else -> img.setImageDrawable(ContextCompat
+                    .getDrawable(applicationContext,R.drawable.red_x))
+        }
+
     }
 
     override fun showEmailValidity(isValidEmail: Boolean){
@@ -101,36 +114,14 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
 
     }
 
-    private fun setImgComplexity(img: ImageView, isComplex: Boolean){
-        when(isComplex){
-            true -> img.setImageDrawable(ContextCompat
-                    .getDrawable(applicationContext,R.drawable.green_check_mark))
-            else -> img.setImageDrawable(ContextCompat
-                    .getDrawable(applicationContext,R.drawable.red_x))
-        }
-
-    }
-
     private fun setOnEditTextListener(){
-
-        val passwordTextWatcher = object: TextWatcher {
-            override fun onTextChanged(password: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                presenter.checkPasswordComplexityDynamic(password)
-            }
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        password_editText.setSimpleOnTextChangedListener { password ->
+            password?.let(presenter::checkPasswordComplexityDynamic)
         }
 
-        val emailTextWatcher = object: TextWatcher {
-            override fun onTextChanged(emailAddress: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                presenter.checkEmailValidity(emailAddress)
-            }
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        email_editText.setSimpleOnTextChangedListener { email ->
+            presenter.checkEmailValidity(email)
         }
-
-        password_editText.addTextChangedListener(passwordTextWatcher)
-        email_editText.addTextChangedListener(emailTextWatcher)
 
         password_editText.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             pw_complexity_frame.apply{ visibility = if (hasFocus) VISIBLE else INVISIBLE }
