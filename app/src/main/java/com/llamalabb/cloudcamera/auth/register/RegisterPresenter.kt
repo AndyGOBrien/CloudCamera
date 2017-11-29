@@ -1,6 +1,5 @@
 package com.llamalabb.cloudcamera.auth.register
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.AuthContract.AuthView
 import com.llamalabb.cloudcamera.auth.AuthPresenter
@@ -16,48 +15,44 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
         AuthPresenter(registerView),
         MyFirebaseAuth.RegisterCallBack{
 
-    override fun loginWithGoogle(account: GoogleSignInAccount) {
-
-    }
-
     override fun handleRegisterButtonClicked(email: String, password: String, confirm: String) {
 
-        if(!isPasswordComplex(password)){
+        if(!isEmailValid(email)){
+            registerView.showFailure("Please enter a valid email address")
+        } else if(!isPasswordComplex(password)) {
             registerView.showFailure("Password does not meet complexity requirements")
         } else if(password != confirm) {
             registerView.showFailure("Passwords do not match")
+        } else {
+            registerUser(email, password)
         }
     }
 
     private fun registerUser(email: String, password: String) {
-
+        MyFirebaseAuth.createAccount(email, password, this)
     }
 
-    override fun accountCreationSuccessful() {
+    private fun isEmailValid(email: CharSequence) = ComplexityParams.Email.passes(email)
 
+    override fun accountCreationSuccessful() {
+        registerView.showSuccess()
     }
 
     override fun accountCreationFailure(msg: String?) {
-
+        registerView.showFailure("Account Creation failure")
     }
 
-    override fun checkEmailValidity(email: CharSequence?) {
-        email?.let{
-            when {
-                ComplexityParams.Email.passes(it) -> registerView.showEmailValidity(true)
-                else -> registerView.showEmailValidity(false)
-            }
-        }
+    override fun checkEmailValidity(email: CharSequence){
+        registerView.showEmailValidity(isEmailValid(email))
     }
 
-    override fun checkPasswordComplexityDynamic(pw: CharSequence){
-        listOf(
-                ComplexityParams.Lower,
+    override fun checkPasswordComplexityParams(pw: CharSequence){
+        listOf(ComplexityParams.Lower,
                 ComplexityParams.Upper,
                 ComplexityParams.Digit,
                 ComplexityParams.Spchr,
                 ComplexityParams.Length
-        ).forEach { registerView.showComplexityStatus(it, it.passes(pw))}
+        ).forEach { registerView.showComplexityStatus(it, it.passes(pw)) }
     }
 
     private fun isPasswordComplex(password: CharSequence) = ComplexityParams.CompletePassword.passes(password)

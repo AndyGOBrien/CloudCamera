@@ -9,16 +9,16 @@ import android.widget.EditText
  */
 
 class TextWatcherFactory{
-    fun create(sOnTextChanged : (sequence: CharSequence?) -> Unit) : TextWatcher{
+    fun create(sOnTextChanged : (sequence: CharSequence) -> Unit) : TextWatcher{
         return object: TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = sOnTextChanged(p0)
+            override fun afterTextChanged(p0: Editable) {}
+            override fun beforeTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) = sOnTextChanged(p0)
         }
     }
 }
 
 
-fun EditText.setSimpleOnTextChangedListener(listener : (text: CharSequence?) -> Unit) {
+fun EditText.setSimpleOnTextChangedListener(listener : (text: CharSequence) -> Unit) {
     this.addTextChangedListener(TextWatcherFactory().create(listener))
 }

@@ -15,7 +15,6 @@ interface AuthContract {
         fun showFailure(msg: String)
         fun showSuccess()
         fun showHidePasswordText()
-        fun googleSignInButtonClicked()
 
         interface Login: AuthView, BaseView<LoginPresenter>{
             fun loginButtonClicked()
@@ -43,8 +42,8 @@ interface AuthContract {
 
     interface RegisterPresenter : Presenter {
         fun handleRegisterButtonClicked(email: String, password: String, confirm: String)
-        fun checkPasswordComplexityDynamic(pw: CharSequence)
-        fun checkEmailValidity(email: CharSequence?)
+        fun checkPasswordComplexityParams(pw: CharSequence)
+        fun checkEmailValidity(email: CharSequence)
     }
 
 }

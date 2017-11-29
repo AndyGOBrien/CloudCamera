@@ -14,9 +14,7 @@ import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.register.RegisterActivity
 
 import kotlinx.android.synthetic.main.activity_login.*
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth.RC_SIGN_IN
@@ -28,9 +26,7 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
         setClickListeners()
-
     }
 
     private fun setClickListeners(){
@@ -39,7 +35,7 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
                 register_frame -> showRegisterView()
                 show_hide_link -> presenter.handleShowLinkClicked()
                 login_button -> loginButtonClicked()
-                google_signin_button -> googleSignInButtonClicked()
+                google_signin_button -> startGoogleSignIn()
             }
         }
 
@@ -69,25 +65,15 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
 
     override fun showSuccess() {
         FirebaseAuth.getInstance().currentUser?.let{ user ->
-            Toast.makeText(
-                    this,
-                    "Logged in as " + user.email,
-                    Toast.LENGTH_SHORT
-            ).show()
-
+            Toast.makeText(this, "Logged in as " + user.email, Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, MainActivity::class.java))
-
-        }
+        } ?: showFailure("Unknown Login Error")
     }
 
     override fun loginButtonClicked() {
         val email = email_editText.text.toString()
         val password = email_editText.text.toString()
         presenter.handleLoginButtonClicked(email, password)
-    }
-
-    override fun googleSignInButtonClicked() {
-        startGoogleSignIn()
     }
 
     private fun startGoogleSignIn() {
