@@ -26,6 +26,11 @@ object MyFirebaseAuth {
         fun accountCreationFailure(msg: String?)
     }
 
+    interface GoogleAuthCallBack{
+        fun googleAuthSuccessful()
+        fun googleAuthFailure(msg: String)
+    }
+
     fun loginUser(email: String, password: String, callBack: LoginCallBack){
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener{task: Task<AuthResult> ->
@@ -53,15 +58,15 @@ object MyFirebaseAuth {
                 }
     }
 
-    fun authWithGoogle(acct: GoogleSignInAccount, callBack: LoginCallBack){
+    fun authWithGoogle(acct: GoogleSignInAccount, callBack: GoogleAuthCallBack){
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential)
                 .addOnCompleteListener{task: Task<AuthResult> ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
-                        callBack.accountLoginSuccessful()
+                        callBack.googleAuthSuccessful()
                     } else {
-                        callBack.accountLoginFailure("Google Auth Failed")
+                        callBack.googleAuthFailure("Google Auth Failed")
                     }
                 }
     }

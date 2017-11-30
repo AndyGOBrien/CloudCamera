@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
                 login_frame -> showLoginView()
                 show_hide_link -> presenter.handleShowLinkClicked()
                 register_button -> registerButtonClicked()
-                google_signin_button -> googleSignInButtonClicked()
+                google_signin_button -> startGoogleSignIn()
             }
         }
 
@@ -76,11 +76,11 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
 
     override fun showComplexityStatus(complexityParam: ComplexityParams, isComplex: Boolean){
         when(complexityParam){
-            is ComplexityParams.Lower -> setImgComplexity(img_has_lower, isComplex)
-            is ComplexityParams.Upper -> setImgComplexity(img_has_upper, isComplex)
-            is ComplexityParams.Digit -> setImgComplexity(img_has_digit, isComplex)
-            is ComplexityParams.Spchr -> setImgComplexity(img_has_spchr, isComplex)
-            is ComplexityParams.Length -> setImgComplexity(img_has_length, isComplex)
+            ComplexityParams.Lower -> setImgComplexity(img_has_lower, isComplex)
+            ComplexityParams.Upper -> setImgComplexity(img_has_upper, isComplex)
+            ComplexityParams.Digit -> setImgComplexity(img_has_digit, isComplex)
+            ComplexityParams.Spchr -> setImgComplexity(img_has_spchr, isComplex)
+            ComplexityParams.Length -> setImgComplexity(img_has_length, isComplex)
         }
     }
 
@@ -101,10 +101,6 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
             email_card.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.invalid)
     }
 
-    override fun googleSignInButtonClicked() {
-        startGoogleSignIn()
-    }
-
     private fun registerButtonClicked() {
         val email = email_editText.text.toString()
         val password = password_editText.text.toString()
@@ -115,14 +111,8 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     private fun setOnEditTextListener(){
-        password_editText.setSimpleOnTextChangedListener { password ->
-            password?.let(presenter::checkPasswordComplexityDynamic)
-        }
-
-        email_editText.setSimpleOnTextChangedListener { email ->
-            presenter.checkEmailValidity(email)
-        }
-
+        password_editText.setSimpleOnTextChangedListener{ presenter.checkPasswordComplexityParams(it)}
+        email_editText.setSimpleOnTextChangedListener{presenter.checkEmailValidity(it)}
         password_editText.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             pw_complexity_frame.apply{ visibility = if (hasFocus) VISIBLE else INVISIBLE }
         }
@@ -147,7 +137,6 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == MyFirebaseAuth.RC_SIGN_IN) {
             val account = Auth.GoogleSignInApi.getSignInResultFromIntent(data).signInAccount
             account?.let{ account ->
