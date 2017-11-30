@@ -24,5 +24,4 @@ open class ComplexityParam(val predicate: (charSeq : CharSequence) -> Boolean) :
     }
 }
 
-
 open class RegexComplexityParam(val regex: Regex) : ComplexityParam({ regex.containsMatchIn(it) })
