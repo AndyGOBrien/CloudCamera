@@ -22,3 +22,5 @@ class TextWatcherFactory{
 fun EditText.setSimpleOnTextChangedListener(listener : (text: CharSequence) -> Unit) {
     this.addTextChangedListener(TextWatcherFactory().create(listener))
 }
+
+fun EditText.asString() = this.text.toString()

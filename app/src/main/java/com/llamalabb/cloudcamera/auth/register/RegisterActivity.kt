@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.View.*
@@ -17,11 +18,11 @@ import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.login.LoginActivity
 import com.llamalabb.cloudcamera.ktfiles.*
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth
+import com.llamalabb.simplefirebaselogin.utils.Utils
 import kotlinx.android.synthetic.main.activity_register.*
 
 
 class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
-
 
     override var presenter: AuthContract.RegisterPresenter = RegisterPresenter(this)
 
@@ -33,25 +34,15 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     private fun setClickListeners(){
-        val onClickListener = View.OnClickListener{ view ->
-            when(view) {
-                login_frame -> showLoginView()
-                show_hide_link -> presenter.handleShowLinkClicked()
-                register_button -> registerButtonClicked()
-                google_signin_button -> startGoogleSignIn()
-            }
-        }
-
-        register_frame.setOnClickListener(onClickListener)
-        show_hide_link.setOnClickListener(onClickListener)
-        register_button.setOnClickListener(onClickListener)
-        google_signin_button.setOnClickListener(onClickListener)
-
-        google_signin_button.setOnClickListener {  }
+        login_frame.setOnClickListener{ showLoginView() }
+        show_hide_link.setOnClickListener{ presenter.handleShowLinkClicked() }
+        register_button.setOnClickListener{ registerButtonClicked() }
+        google_signin_button.setOnClickListener{ startGoogleSignIn() }
     }
 
     override fun showLoginView(){
         startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     override fun showFailure(msg: String) {
@@ -59,8 +50,13 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     override fun showSuccess() {
-
+        Utils.showMessageShort(this, "Account Created")
     }
+
+    override fun showVerificationEmailSent() {
+        Utils.showMessageShort(this, "Verification Email Sent")
+    }
+
 
     override fun showHidePasswordText() {
         if(show_hide_link.text == "show") {
@@ -95,24 +91,37 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     override fun showEmailValidity(isValidEmail: Boolean){
-        if(isValidEmail)
-            email_card.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.valid)
+        showFieldValidity(email_card, isValidEmail)
+    }
+
+    override fun showConfirmValidity(isConfirmEqual: Boolean){
+        showFieldValidity(confirm_card, isConfirmEqual)
+    }
+
+    override fun showPasswordValidity(isPasswordValid: Boolean){
+        showFieldValidity(password_card, isPasswordValid)
+    }
+
+    private fun showFieldValidity(cardView: CardView, isValid: Boolean){
+        if(isValid)
+            cardView.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.valid)
         else
-            email_card.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.invalid)
+            cardView.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.invalid)
     }
 
     private fun registerButtonClicked() {
-        val email = email_editText.text.toString()
-        val password = password_editText.text.toString()
-        val confirm = confirm_editText.text.toString()
+        val email = email_editText.asString()
+        val password = password_editText.asString()
+        val confirm = confirm_editText.asString()
 
         presenter.handleRegisterButtonClicked(email, password, confirm)
 
     }
 
     private fun setOnEditTextListener(){
-        password_editText.setSimpleOnTextChangedListener{ presenter.checkPasswordComplexityParams(it)}
-        email_editText.setSimpleOnTextChangedListener{presenter.checkEmailValidity(it)}
+        password_editText.setSimpleOnTextChangedListener{ presenter.checkPasswordComplexityParams(it) }
+        confirm_editText.setSimpleOnTextChangedListener { presenter.checkConfirmIsEqual(password_editText.asString(), it) }
+        email_editText.setSimpleOnTextChangedListener{ presenter.checkEmailValidity(it) }
         password_editText.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             pw_complexity_frame.apply{ visibility = if (hasFocus) VISIBLE else INVISIBLE }
         }

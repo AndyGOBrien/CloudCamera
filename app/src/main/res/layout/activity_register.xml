@@ -42,7 +42,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/password_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -82,7 +82,7 @@
         android:text="REGISTER"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView1" />
+        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
 
     <TextView
         android:id="@+id/show_hide_link"
@@ -94,11 +94,11 @@
         android:text="show"
         android:textColor="#2196ff"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView1"
-        app:layout_constraintTop_toBottomOf="@+id/cardView1" />
+        app:layout_constraintEnd_toEndOf="@+id/confirm_card"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView1"
+        android:id="@+id/confirm_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -110,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+        app:layout_constraintTop_toBottomOf="@+id/password_card">
 
         <EditText
             android:id="@+id/confirm_editText"
@@ -169,7 +169,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_frame" />
+        app:layout_constraintTop_toBottomOf="@+id/login_frame" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/login_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_button">
+
+        <TextView
+            android:id="@+id/forgot_password_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="LOGIN"
+            android:textAllCaps="true"
+            android:textColor="#3366BB"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:text="Already have an account?"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
     <View
         android:id="@+id/space"
@@ -180,7 +218,7 @@
         android:background="#eeeeee"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/cardView1"
+        app:layout_constraintStart_toStartOf="@+id/confirm_card"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <View
@@ -191,7 +229,7 @@
         android:layout_marginStart="16dp"
         android:background="#eeeeee"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/cardView1"
+        app:layout_constraintEnd_toEndOf="@+id/confirm_card"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />
@@ -204,7 +242,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView1"
+        app:layout_constraintBottom_toBottomOf="@+id/confirm_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.0">
@@ -243,51 +281,7 @@
             android:layout_height="10dp"
             android:layout_margin="1dp"
             app:srcCompat="@drawable/red_x" />
+
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/register_frame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_button">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/login_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/register_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="LOGIN"
-                android:textAllCaps="true"
-                android:textColor="#3366BB"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:text="Already have an account?"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-
-    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

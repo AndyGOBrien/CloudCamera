@@ -35,7 +35,20 @@ class LoginPresenter(private val loginView: AuthView.Login) :
         loginUser(email, password)
     }
 
+    override fun sendPasswordReset(email: String){
+        MyFirebaseAuth.sendPasswordReset(email, this)
+    }
+
+    override fun passwordResetSendFailure(msg: String) {
+        loginView.showFailure(msg)
+    }
+
+    override fun passwordResetSendSuccess() {
+
+    }
+
     private fun loginUser(email: String, password: String) {
         MyFirebaseAuth.loginUser(email, password, this)
     }
+
 }

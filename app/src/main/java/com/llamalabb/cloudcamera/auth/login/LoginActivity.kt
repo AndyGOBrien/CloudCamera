@@ -1,10 +1,12 @@
 package com.llamalabb.cloudcamera.auth.login
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.text.method.PasswordTransformationMethod
-import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.llamalabb.cloudcamera.MainActivity
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.llamalabb.cloudcamera.ktfiles.asString
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth.RC_SIGN_IN
 
 
@@ -30,19 +33,11 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
     }
 
     private fun setClickListeners(){
-        val onClickListener = View.OnClickListener{ view ->
-            when(view) {
-                register_frame -> showRegisterView()
-                show_hide_link -> presenter.handleShowLinkClicked()
-                login_button -> loginButtonClicked()
-                google_signin_button -> startGoogleSignIn()
-            }
-        }
-
-        register_frame.setOnClickListener(onClickListener)
-        show_hide_link.setOnClickListener(onClickListener)
-        login_button.setOnClickListener(onClickListener)
-        google_signin_button.setOnClickListener(onClickListener)
+        register_frame.setOnClickListener { showRegisterView() }
+        show_hide_link.setOnClickListener { presenter.handleShowLinkClicked() }
+        login_button.setOnClickListener { loginButtonClicked() }
+        google_signin_button.setOnClickListener { startGoogleSignIn() }
+        forgot_password_frame.setOnClickListener { showForgotPasswordMessage() }
     }
 
     override fun showRegisterView(){
@@ -71,9 +66,34 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
     }
 
     override fun loginButtonClicked() {
-        val email = email_editText.text.toString()
-        val password = email_editText.text.toString()
+        val email = email_editText.asString()
+        val password = password_editText.asString()
         presenter.handleLoginButtonClicked(email, password)
+    }
+
+    private fun showForgotPasswordMessage(){
+
+
+        val builder = AlertDialog.Builder(this)
+        val input = EditText(this)
+        input.hint = "your email"
+
+        val onPositiveClick = DialogInterface.OnClickListener { dialogInterface, i ->
+            presenter.sendPasswordReset(input.asString())
+            dialogInterface.dismiss()
+        }
+
+        val onNegativeClick = DialogInterface.OnClickListener { dialogInterface, i ->
+            dialogInterface.dismiss()
+        }
+
+        builder.setTitle("Password Reset")
+                .setMessage("Enter your email address")
+                .setView(input)
+                .setPositiveButton("Send", onPositiveClick)
+                .setNegativeButton("Cancel", onNegativeClick)
+                .create()
+                .show()
     }
 
     private fun startGoogleSignIn() {

@@ -28,22 +28,30 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
         }
     }
 
-    private fun registerUser(email: String, password: String) {
-        MyFirebaseAuth.createAccount(email, password, this)
-    }
-
-    private fun isEmailValid(email: CharSequence) = ComplexityParams.Email.passes(email)
-
     override fun accountCreationSuccessful() {
         registerView.showSuccess()
     }
 
+
     override fun accountCreationFailure(msg: String?) {
-        registerView.showFailure("Account Creation failure")
+        msg?.let{ registerView.showFailure(msg) } ?: registerView.showFailure("Unknown Error")
+    }
+
+    override fun verificationEmailSendSuccess() {
+        registerView.showVerificationEmailSent()
+        registerView.showLoginView()
+    }
+
+    override fun verificationEmailSendFailure(msg: String) {
+        registerView.showFailure(msg)
     }
 
     override fun checkEmailValidity(email: CharSequence){
         registerView.showEmailValidity(isEmailValid(email))
+    }
+
+    override fun checkConfirmIsEqual(password: String, confirm: CharSequence){
+        registerView.showConfirmValidity(confirm.toString() == password)
     }
 
     override fun checkPasswordComplexityParams(pw: CharSequence){
@@ -53,7 +61,15 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
                 ComplexityParams.Spchr,
                 ComplexityParams.Length
         ).forEach { registerView.showComplexityStatus(it, it.passes(pw)) }
+        registerView.showPasswordValidity(isPasswordComplex(pw))
     }
+
+
+    private fun registerUser(email: String, password: String) {
+        MyFirebaseAuth.createAccount(email, password, this)
+    }
+
+    private fun isEmailValid(email: CharSequence) = ComplexityParams.Email.passes(email)
 
     private fun isPasswordComplex(password: CharSequence) = ComplexityParams.CompletePassword.passes(password)
 }

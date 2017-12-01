@@ -25,6 +25,9 @@ interface AuthContract {
             fun showLoginView()
             fun showComplexityStatus(complexityParam: ComplexityParams, isComplex: Boolean)
             fun showEmailValidity(isValidEmail: Boolean)
+            fun showConfirmValidity(isConfirmEqual: Boolean)
+            fun showPasswordValidity(isPasswordValid: Boolean)
+            fun showVerificationEmailSent()
         }
     }
 
@@ -37,13 +40,14 @@ interface AuthContract {
     interface LoginPresenter : Presenter {
         fun handleLoginButtonClicked(email: String, password: String)
         fun showRegisterView()
-
+        fun sendPasswordReset(email: String)
     }
 
     interface RegisterPresenter : Presenter {
         fun handleRegisterButtonClicked(email: String, password: String, confirm: String)
         fun checkPasswordComplexityParams(pw: CharSequence)
         fun checkEmailValidity(email: CharSequence)
+        fun checkConfirmIsEqual(password: String, confirm: CharSequence)
     }
 
 }
