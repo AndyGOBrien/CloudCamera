@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.text.method.PasswordTransformationMethod
-import android.view.View
 import android.view.View.*
 import android.widget.ImageView
 import android.widget.Toast

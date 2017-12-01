@@ -9,7 +9,7 @@ import android.text.method.PasswordTransformationMethod
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.llamalabb.cloudcamera.MainActivity
+import com.llamalabb.cloudcamera.main.MainActivity
 
 import com.llamalabb.cloudcamera.R
 import com.llamalabb.cloudcamera.auth.AuthContract
