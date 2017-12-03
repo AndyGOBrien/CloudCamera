@@ -3,6 +3,8 @@ package com.llamalabb.cloudcamera.ktfiles
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.ImageView
+import com.llamalabb.cloudcamera.GlideApp
 
 /**
  * Created by andy on 11/28/17.
@@ -24,3 +26,11 @@ fun EditText.setSimpleOnTextChangedListener(listener : (text: CharSequence) -> U
 }
 
 fun EditText.asString() = this.text.toString()
+
+fun ImageView.loadImage(url : String){
+    GlideApp.with(context)
+            .load(url)
+            .centerCrop()
+            .fitCenter()
+            .into(this)
+}

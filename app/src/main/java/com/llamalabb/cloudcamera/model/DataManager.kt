@@ -33,4 +33,8 @@ object DataManager {
         dbUserImagesRef.child(imageUploadId).setValue(image)
     }
 
+    fun getUserImageList(){
+        dbUserImagesRef.
+    }
+
 }

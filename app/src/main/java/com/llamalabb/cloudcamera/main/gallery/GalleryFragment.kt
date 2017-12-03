@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.llamalabb.cloudcamera.R
+import com.llamalabb.cloudcamera.ktfiles.loadImage
+import kotlinx.android.synthetic.main.fragment_gallery.view.*
 
 
 /**
@@ -29,6 +31,7 @@ class GalleryFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_gallery, container, false)
+        view.gallery_recycler.adapter = GalleryRecyclerAdapter()
         return view
     }
 
@@ -47,7 +50,7 @@ class GalleryFragment : Fragment(){
 
     class GalleryRecyclerAdapter(val imgUrls: List<String>) : RecyclerView.Adapter<GalleryRecyclerAdapter.MyViewHolder>() {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
+            holder.image.loadImage(imgUrls[position])
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
