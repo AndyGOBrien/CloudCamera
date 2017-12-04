@@ -30,7 +30,6 @@ fun EditText.asString() = this.text.toString()
 fun ImageView.loadImage(url : String){
     GlideApp.with(context)
             .load(url)
-            .centerCrop()
             .fitCenter()
             .into(this)
 }

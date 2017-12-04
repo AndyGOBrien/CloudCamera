@@ -8,14 +8,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.llamalabb.cloudcamera.R
 import com.llamalabb.cloudcamera.auth.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import android.provider.MediaStore
-import android.app.Activity
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import android.Manifest
+import android.annotation.SuppressLint
+import android.util.Log
 import com.llamalabb.cloudcamera.model.DataManager
-import java.io.IOException
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
 
 
+@RuntimePermissions
 class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolder {
 
     private lateinit var adapterViewPager: FragmentPagerAdapter
@@ -46,34 +51,59 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
     }
 
     override fun launchGallery() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_PHOTO)
+//        val intent = Intent()
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_PHOTO)
+
+        launchGalleryForResultWithPermissionCheck()
+
+    }
+
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun launchGalleryForResult(){
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setFixAspectRatio(true)
+                .setAspectRatio(9,10)
+                .start(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == GET_PHOTO && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-
-            val uri = data.data
-
-            DataManager.uploadFileToStorage(getFileExtension(uri), uri)
-
-            try {
-                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-
-            } catch (e: IOException) {
-                e.printStackTrace()
+        data?.let{ data ->
+            if (resultCode == RESULT_OK) {
+                when (requestCode) {
+                    GET_PHOTO -> {
+                        val uri = data.data
+                        DataManager.uploadFileToStorage(getFileExtension(uri), uri)
+                    }
+                    CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                        val result = CropImage.getActivityResult(data)
+                        val uri = result.uri
+                        Log.d("Crop Result", "Crop")
+                        DataManager.uploadFileToStorage("jpg", uri)
+                    }
+                }
             }
-
         }
     }
 
     fun getFileExtension(uri: Uri) : String {
         val contentResolver = contentResolver
         val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
+
+        val ext = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
+
+        Log.d("get extension", ext)
+        return ext
+    }
+
+
+    @SuppressLint("NeedOnRequestPermissionsResult")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 }

@@ -2,20 +2,27 @@ package com.llamalabb.cloudcamera.main.gallery
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.ImageView
+import com.llamalabb.cloudcamera.EqualSpaceItemDecoration
 import com.llamalabb.cloudcamera.R
 import com.llamalabb.cloudcamera.ktfiles.loadImage
+import com.llamalabb.cloudcamera.model.DataManager
+import com.llamalabb.cloudcamera.model.MyImage
+import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.android.synthetic.main.fragment_gallery.view.*
 
 
 /**
  * Created by andy on 12/1/17.
  */
-class GalleryFragment : Fragment(){
+class GalleryFragment : Fragment(), DataManager.DMCallBack{
+
 
     private var page: Int = 1
     private var title: String = ""
@@ -26,13 +33,22 @@ class GalleryFragment : Fragment(){
         page = arguments.getInt("pageNum", page)
         title = arguments.getString("title")
 
+        DataManager.buildListener(this)
+
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_gallery, container, false)
-        view.gallery_recycler.adapter = GalleryRecyclerAdapter()
+        val itemDecoration = EqualSpaceItemDecoration(context, R.dimen.item_spacing)
+        view.gallery_recycler.layoutManager = GridLayoutManager(context, 2)
+        view.gallery_recycler.addItemDecoration(itemDecoration)
+        view.gallery_recycler.adapter = GalleryRecyclerAdapter(DataManager.images)
         return view
+    }
+
+    override fun dataSetChanged() {
+        gallery_recycler.adapter.notifyDataSetChanged()
     }
 
 
@@ -48,9 +64,9 @@ class GalleryFragment : Fragment(){
     }
 
 
-    class GalleryRecyclerAdapter(val imgUrls: List<String>) : RecyclerView.Adapter<GalleryRecyclerAdapter.MyViewHolder>() {
+    class GalleryRecyclerAdapter(val imgUrls: ArrayList<MyImage>) : RecyclerView.Adapter<GalleryRecyclerAdapter.MyViewHolder>() {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.image.loadImage(imgUrls[position])
+            holder.image.loadImage(imgUrls[position].url!!)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
