@@ -9,9 +9,23 @@ import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 abstract class AuthPresenter(private val authView: AuthContract.AuthView)
     : AuthContract.Presenter, MyFirebaseAuth.GoogleAuthCallBack{
 
-    override fun onStart() {}
-    override fun showHideText() { authView.showHidePasswordText() }
-    override fun handleShowLinkClicked() { authView.showHidePasswordText() }
+    private var showPassword: Boolean = false
+
+    override fun onStart() {
+        showPassword = false
+        setPasswordVisibility()
+    }
+    override fun setPasswordVisibility() {
+        if(showPassword) {
+            authView.showPassword()
+            showPassword = false
+        }
+        else{
+            authView.hidePassword()
+            showPassword = true
+        }
+    }
+
     override fun googleAuthFailure(msg: String) { authView.showFailure(msg) }
     override fun googleAuthSuccessful() { authView.showSuccess() }
     override fun loginWithGoogle(account: GoogleSignInAccount) {

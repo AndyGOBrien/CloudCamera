@@ -63,8 +63,8 @@ class GalleryFragment : Fragment(), DataManager.DMCallBack{
         }
     }
 
-
-    class GalleryRecyclerAdapter(val imgUrls: ArrayList<MyImage>) : RecyclerView.Adapter<GalleryRecyclerAdapter.MyViewHolder>() {
+    class GalleryRecyclerAdapter(val imgUrls: ArrayList<MyImage>)
+        : RecyclerView.Adapter<GalleryRecyclerAdapter.MyViewHolder>() {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.image.loadImage(imgUrls[position].url!!)
         }

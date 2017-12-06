@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v7.app.AlertDialog
 import android.text.method.PasswordTransformationMethod
 import android.widget.EditText
@@ -24,18 +25,22 @@ import com.llamalabb.cloudcamera.model.MyFirebaseAuth.RC_SIGN_IN
 
 
 class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
+
+
     override var presenter: AuthContract.LoginPresenter = LoginPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setClickListeners()
+        presenter.onStart()
     }
 
     private fun setClickListeners(){
         register_frame.setOnClickListener { showRegisterView() }
-        show_hide_link.setOnClickListener { presenter.handleShowLinkClicked() }
+        show_hide_link.setOnClickListener { presenter.setPasswordVisibility() }
         login_button.setOnClickListener { loginButtonClicked() }
+        login_text.setOnClickListener { loginButtonClicked() }
         google_signin_button.setOnClickListener { startGoogleSignIn() }
         forgot_password_frame.setOnClickListener { showForgotPasswordMessage() }
     }
@@ -44,14 +49,12 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
         startActivity(Intent(this, RegisterActivity::class.java))
     }
 
-    override fun showHidePasswordText(){
-        if(show_hide_link.text == "show") {
-            show_hide_link.text = "hide"
-            password_editText.transformationMethod = null
-        } else {
-            show_hide_link.text = "show"
-            password_editText.transformationMethod = PasswordTransformationMethod()
-        }
+    override fun showPassword() {
+        password_editText.transformationMethod = null
+    }
+
+    override fun hidePassword() {
+        password_editText.transformationMethod = PasswordTransformationMethod()
     }
 
     override fun showFailure(msg: String) {
@@ -62,13 +65,22 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
         FirebaseAuth.getInstance().currentUser?.let{ user ->
             Toast.makeText(this, "Logged in as " + user.email, Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         } ?: showFailure("Unknown Login Error")
     }
 
     override fun loginButtonClicked() {
-        val email = email_editText.asString()
-        val password = password_editText.asString()
-        presenter.handleLoginButtonClicked(email, password)
+
+        val emailHasText = !email_editText.text.isNullOrEmpty()
+        val passwordHasText = !password_editText.text.isNullOrEmpty()
+
+        if(emailHasText && passwordHasText) {
+            val email = email_editText.asString()
+            val password = password_editText.asString()
+            presenter.handleLoginButtonClicked(email, password)
+        } else {
+            showFailure("Please enter Username and Password")
+        }
     }
 
     private fun showForgotPasswordMessage(){

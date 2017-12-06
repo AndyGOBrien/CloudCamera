@@ -4,109 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_primary"
     tools:context="com.llamalabb.cloudcamera.auth.register.RegisterActivity">
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/email_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/email_editText"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="42dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="center_vertical"
             android:hint="email"
             android:inputType="textEmailAddress"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/password_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toStartOf="@+id/pw_complexity_frame"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_card">
 
+        <ImageView
+            android:id="@+id/img_has_spchr"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginRight="0dp"
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="@+id/img_has_lower"
+            app:layout_constraintTop_toBottomOf="@+id/img_has_lower"
+            app:srcCompat="@drawable/ic_action_invalid" />
+
+        <ImageView
+            android:id="@+id/img_has_upper"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/img_has_lower"
+            app:layout_constraintEnd_toStartOf="@+id/img_has_lower"
+            app:srcCompat="@drawable/ic_action_invalid" />
+
+        <ImageView
+            android:id="@+id/img_has_lower"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="12dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/show_hide_password"
+            app:layout_constraintEnd_toStartOf="@+id/show_hide_password"
+            app:layout_constraintTop_toTopOf="@+id/show_hide_password"
+            app:srcCompat="@drawable/ic_action_invalid" />
+
+        <ImageView
+            android:id="@+id/img_has_length"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginLeft="8dp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="@+id/img_has_lower"
+            app:layout_constraintTop_toBottomOf="@+id/img_has_lower"
+            app:srcCompat="@drawable/ic_action_invalid" />
+
+        <ImageView
+            android:id="@+id/img_has_digit"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/img_has_lower"
+            app:layout_constraintStart_toEndOf="@+id/img_has_lower"
+            app:srcCompat="@drawable/ic_action_invalid" />
+
         <EditText
             android:id="@+id/password_editText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="center_vertical"
             android:hint="password"
             android:inputType="textPassword"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_has_upper"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.v7.widget.CardView>
 
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/round_button"
-        android:elevation="2dp"
-        android:text="REGISTER"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
+        <ImageButton
+            android:id="@+id/show_hide_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_action_remove_red_eye" />
 
-    <TextView
-        android:id="@+id/show_hide_link"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="show"
-        android:textColor="#2196ff"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/confirm_card"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
+    </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/confirm_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
+        android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,33 +145,32 @@
 
         <EditText
             android:id="@+id/confirm_editText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="center_vertical"
             android:hint="confirm"
             android:inputType="textPassword"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/show_hide_confirm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.v7.widget.CardView>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="105dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/if_camera_115759" />
+        <ImageButton
+            android:id="@+id/show_hide_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_action_remove_red_eye" />
+    </android.support.constraint.ConstraintLayout>
 
     <com.shobhitpuri.custombuttons.GoogleSignInButton
         android:id="@+id/google_signin_button"
@@ -149,11 +179,10 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:text="Sign in with Google"
         app:isDarkTheme="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -163,51 +192,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="56dp"
         android:text="OR"
-        android:textColor="#bdbdbd"
+        android:textColor="@color/background_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_frame" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/login_frame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_button">
-
-        <TextView
-            android:id="@+id/forgot_password_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="LOGIN"
-            android:textAllCaps="true"
-            android:textColor="#3366BB"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:text="Already have an account?"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
 
     <View
         android:id="@+id/space"
@@ -215,7 +206,7 @@
         android:layout_height="1dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
-        android:background="#eeeeee"
+        android:background="@color/background_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/confirm_card"
@@ -227,61 +218,32 @@
         android:layout_height="1dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:background="#eeeeee"
+        android:background="@color/background_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="@+id/confirm_card"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
-    <LinearLayout
-        android:id="@+id/pw_complexity_frame"
-        android:layout_width="32dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/confirm_card"
+    <ImageButton
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_arrow_forward" />
 
-        <ImageView
-            android:id="@+id/img_has_lower"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_margin="1dp"
-            app:srcCompat="@drawable/red_x" />
-
-        <ImageView
-            android:id="@+id/img_has_upper"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_margin="1dp"
-            app:srcCompat="@drawable/red_x" />
-
-        <ImageView
-            android:id="@+id/img_has_digit"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_margin="1dp"
-            app:srcCompat="@drawable/red_x" />
-
-        <ImageView
-            android:id="@+id/img_has_spchr"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_margin="1dp"
-            app:srcCompat="@drawable/red_x" />
-
-        <ImageView
-            android:id="@+id/img_has_length"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_margin="1dp"
-            app:srcCompat="@drawable/red_x" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/register_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="REGISTER"
+        app:layout_constraintBottom_toBottomOf="@+id/register_button"
+        app:layout_constraintEnd_toStartOf="@+id/register_button"
+        app:layout_constraintTop_toTopOf="@+id/register_button" />
 
 </android.support.constraint.ConstraintLayout>

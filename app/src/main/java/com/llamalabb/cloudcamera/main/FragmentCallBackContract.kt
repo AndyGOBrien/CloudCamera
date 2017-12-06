@@ -15,7 +15,7 @@ interface FragmentCallBackContract {
     }
 
     interface HomeCallBack{
-
+        fun logout()
     }
 
     interface ProfileCallBack{

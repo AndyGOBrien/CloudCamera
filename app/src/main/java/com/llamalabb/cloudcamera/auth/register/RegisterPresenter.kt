@@ -64,6 +64,12 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
         registerView.showPasswordValidity(isPasswordComplex(pw))
     }
 
+    override fun setPasswordComplexityIndicators(show: Boolean){
+        if(show)
+            registerView.showPasswordComplexityIndicators()
+        else
+            registerView.hidePasswordComplexityIndicators()
+    }
 
     private fun registerUser(email: String, password: String) {
         MyFirebaseAuth.createAccount(email, password, this)

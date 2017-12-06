@@ -14,7 +14,8 @@ interface AuthContract {
 
         fun showFailure(msg: String)
         fun showSuccess()
-        fun showHidePasswordText()
+        fun showPassword()
+        fun hidePassword()
 
         interface Login: AuthView, BaseView<LoginPresenter>{
             fun loginButtonClicked()
@@ -28,12 +29,13 @@ interface AuthContract {
             fun showConfirmValidity(isConfirmEqual: Boolean)
             fun showPasswordValidity(isPasswordValid: Boolean)
             fun showVerificationEmailSent()
+            fun hidePasswordComplexityIndicators()
+            fun showPasswordComplexityIndicators()
         }
     }
 
     interface Presenter : BasePresenter {
-        fun showHideText()
-        fun handleShowLinkClicked()
+        fun setPasswordVisibility()
         fun loginWithGoogle(account: GoogleSignInAccount)
     }
 
@@ -48,6 +50,7 @@ interface AuthContract {
         fun checkPasswordComplexityParams(pw: CharSequence)
         fun checkEmailValidity(email: CharSequence)
         fun checkConfirmIsEqual(password: String, confirm: CharSequence)
+        fun setPasswordComplexityIndicators(show: Boolean)
     }
 
 }

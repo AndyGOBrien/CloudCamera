@@ -50,18 +50,25 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
         finish()
     }
 
+    override fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        startLoginActivity()
+        finish()
+    }
+
     override fun launchGallery() {
+        launchGalleryForResultWithPermissionCheck()
+    }
+
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun launchGalleryForResult(){
+
 //        val intent = Intent()
 //        intent.type = "image/*"
 //        intent.action = Intent.ACTION_GET_CONTENT
 //        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_PHOTO)
 
-        launchGalleryForResultWithPermissionCheck()
 
-    }
-
-    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    fun launchGalleryForResult(){
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setFixAspectRatio(true)
