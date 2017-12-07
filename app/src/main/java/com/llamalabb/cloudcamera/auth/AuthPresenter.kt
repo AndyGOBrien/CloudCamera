@@ -9,20 +9,20 @@ import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 abstract class AuthPresenter(private val authView: AuthContract.AuthView)
     : AuthContract.Presenter, MyFirebaseAuth.GoogleAuthCallBack{
 
-    private var showPassword: Boolean = false
+    private var isPasswordVisible: Boolean = true
 
     override fun onStart() {
-        showPassword = false
+        isPasswordVisible = true
         setPasswordVisibility()
     }
     override fun setPasswordVisibility() {
-        if(showPassword) {
-            authView.showPassword()
-            showPassword = false
+        if(isPasswordVisible) {
+            authView.hidePassword()
+            isPasswordVisible = false
         }
         else{
-            authView.hidePassword()
-            showPassword = true
+            authView.showPassword()
+            isPasswordVisible = true
         }
     }
 

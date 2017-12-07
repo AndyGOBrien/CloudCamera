@@ -47,11 +47,11 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
     }
 
     override fun checkEmailValidity(email: CharSequence){
-        registerView.showEmailValidity(isEmailValid(email))
+        registerView.showEmailValidity(isEmailValid(email), email.isEmpty())
     }
 
-    override fun checkConfirmIsEqual(password: String, confirm: CharSequence){
-        registerView.showConfirmValidity(confirm.toString() == password)
+    override fun checkConfirmIsEqual(password: CharSequence, confirm: CharSequence){
+        registerView.showConfirmValidity(confirm.toString() == password, confirm.isEmpty())
     }
 
     override fun checkPasswordComplexityParams(pw: CharSequence){
@@ -61,7 +61,7 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
                 ComplexityParams.Spchr,
                 ComplexityParams.Length
         ).forEach { registerView.showComplexityStatus(it, it.passes(pw)) }
-        registerView.showPasswordValidity(isPasswordComplex(pw))
+        registerView.showPasswordValidity(isPasswordComplex(pw), pw.isEmpty())
     }
 
     override fun setPasswordComplexityIndicators(show: Boolean){

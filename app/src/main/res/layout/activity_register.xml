@@ -8,7 +8,7 @@
     tools:context="com.llamalabb.cloudcamera.auth.register.RegisterActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/email_card"
+        android:id="@+id/email_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -40,7 +40,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/password_card"
+        android:id="@+id/password_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -49,7 +49,7 @@
         android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_card">
+        app:layout_constraintTop_toBottomOf="@+id/email_field">
 
         <ImageView
             android:id="@+id/img_has_spchr"
@@ -131,7 +131,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/confirm_card"
+        android:id="@+id/confirm_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -141,7 +141,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_card">
+        app:layout_constraintTop_toBottomOf="@+id/password_field">
 
         <EditText
             android:id="@+id/confirm_editText"
@@ -198,7 +198,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
+        app:layout_constraintTop_toBottomOf="@+id/confirm_field" />
 
     <View
         android:id="@+id/space"
@@ -209,7 +209,7 @@
         android:background="@color/background_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/confirm_card"
+        app:layout_constraintStart_toStartOf="@+id/confirm_field"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <View
@@ -220,7 +220,7 @@
         android:layout_marginStart="16dp"
         android:background="@color/background_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/confirm_card"
+        app:layout_constraintEnd_toEndOf="@+id/confirm_field"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />

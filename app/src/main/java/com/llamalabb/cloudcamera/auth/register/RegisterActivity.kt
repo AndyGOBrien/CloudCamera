@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
         complexityIndicators = listOf(img_has_length, img_has_digit, img_has_lower, img_has_upper, img_has_spchr)
         setClickListeners()
         setOnEditTextListener()
-        onStart()
+        presenter.onStart()
     }
 
     private fun setClickListeners(){
@@ -62,13 +62,13 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     override fun showPassword() {
-        password_editText.transformationMethod = null
-        confirm_editText.transformationMethod = null
+        password_editText.setRegularText()
+        confirm_editText.setRegularText()
     }
 
     override fun hidePassword() {
-        password_editText.transformationMethod = PasswordTransformationMethod()
-        confirm_editText.transformationMethod = PasswordTransformationMethod()
+        password_editText.setPasswordText()
+        confirm_editText.setPasswordText()
     }
 
     override fun showComplexityStatus(complexityParam: ComplexityParams, isComplex: Boolean){
@@ -91,26 +91,24 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
 
     }
 
-    override fun showEmailValidity(isValidEmail: Boolean){
-        if(email_editText.text.isNullOrEmpty())
-            showFieldValidity(email_card, isValidEmail)
+    override fun showEmailValidity(isValidEmail: Boolean, isEmpty: Boolean){
+            showFieldValidity(email_field, isEmpty, isValidEmail)
     }
 
-    override fun showConfirmValidity(isConfirmEqual: Boolean){
-        if(!confirm_editText.text.isNullOrEmpty())
-            showFieldValidity(confirm_card, isConfirmEqual)
+    override fun showConfirmValidity(isConfirmEqual: Boolean, isEmpty: Boolean){
+            showFieldValidity(confirm_field, isEmpty, isConfirmEqual)
     }
 
-    override fun showPasswordValidity(isPasswordValid: Boolean){
-        if(!password_editText.text.isNullOrEmpty())
-            showFieldValidity(password_card, isPasswordValid)
+    override fun showPasswordValidity(isPasswordValid: Boolean, isEmpty:Boolean){
+            showFieldValidity(password_field, isEmpty, isPasswordValid)
     }
 
-    private fun showFieldValidity(view: View, isValid: Boolean){
-        if(isValid)
-            view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text_valid)
-        else
-            view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text_invalid)
+    private fun showFieldValidity(view: View, isEmpty: Boolean, isValid: Boolean){
+        when {
+            isEmpty -> view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text)
+            isValid -> view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text_valid)
+            else -> view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text_invalid)
+        }
     }
 
     private fun registerButtonClicked() {
@@ -125,7 +123,7 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     private fun setOnEditTextListener(){
         password_editText.setSimpleOnTextChangedListener{
             presenter.checkPasswordComplexityParams(it)
-            presenter.checkConfirmIsEqual( confirm_editText.asString(), it )
+            presenter.checkConfirmIsEqual(it , confirm_editText.asString())
         }
         confirm_editText.setSimpleOnTextChangedListener {
             presenter.checkConfirmIsEqual(password_editText.asString(), it)

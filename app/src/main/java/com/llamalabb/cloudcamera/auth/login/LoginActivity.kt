@@ -21,6 +21,8 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.llamalabb.cloudcamera.ktfiles.asString
+import com.llamalabb.cloudcamera.ktfiles.setPasswordText
+import com.llamalabb.cloudcamera.ktfiles.setRegularText
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth.RC_SIGN_IN
 
 
@@ -50,11 +52,11 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
     }
 
     override fun showPassword() {
-        password_editText.transformationMethod = null
+        password_editText.setRegularText()
     }
 
     override fun hidePassword() {
-        password_editText.transformationMethod = PasswordTransformationMethod()
+        password_editText.setPasswordText()
     }
 
     override fun showFailure(msg: String) {
