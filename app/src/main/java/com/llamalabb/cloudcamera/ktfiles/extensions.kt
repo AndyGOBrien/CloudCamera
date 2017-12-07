@@ -2,6 +2,7 @@ package com.llamalabb.cloudcamera.ktfiles
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.PasswordTransformationMethod
 import android.widget.EditText
 import android.widget.ImageView
 import com.llamalabb.cloudcamera.GlideApp
@@ -26,6 +27,16 @@ fun EditText.setSimpleOnTextChangedListener(listener : (text: CharSequence) -> U
 }
 
 fun EditText.asString() = this.text.toString()
+fun EditText.hasText() = !this.text.isNullOrEmpty()
+fun EditText.setCursorEnd() = this.setSelection(this.text.length)
+fun EditText.setRegularText(){
+    this.transformationMethod = null
+    this.setCursorEnd()
+}
+fun EditText.setPasswordText(){
+    this.transformationMethod = PasswordTransformationMethod()
+    this.setCursorEnd()
+}
 
 fun ImageView.loadImage(url : String){
     GlideApp.with(context)

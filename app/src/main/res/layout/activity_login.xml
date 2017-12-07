@@ -4,191 +4,139 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_primary"
     tools:context="com.llamalabb.cloudcamera.auth.login.LoginActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/register_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp">
-
-            <TextView
-                android:id="@+id/forgot_password_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="LOGIN"
-                android:textAllCaps="true"
-                android:textColor="#3366BB"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:text="Already have an account?"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/forgot_password_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp">
-
-            <TextView
-                android:id="@+id/register_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="RESET"
-                android:textAllCaps="true"
-                android:textColor="#3366BB"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:text="Forgot your password?"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
-
-    <Button
+    <ImageButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/round_button"
-        android:elevation="2dp"
-        android:text="Login"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_arrow_forward" />
 
     <TextView
-        android:id="@+id/show_hide_link"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="show"
-        android:textColor="#2196ff"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/confirm_card"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_card" />
+        android:id="@+id/login_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="LOGIN"
+        app:layout_constraintBottom_toBottomOf="@+id/login_button"
+        app:layout_constraintEnd_toStartOf="@+id/login_button"
+        app:layout_constraintTop_toTopOf="@+id/login_button" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/email_card"
+    <TextView
+        android:id="@+id/forgot_password_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="RESET PASSWORD"
+        android:textAllCaps="true"
+        android:textColor="@color/background_dark"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/confirm_field"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_field" />
+
+    <TextView
+        android:id="@+id/register_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="CREATE ACCOUNT"
+        android:textAllCaps="true"
+        android:textColor="@color/background_dark"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/confirm_field"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_field" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/email_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/email_editText"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="center_vertical"
             android:hint="email"
             android:inputType="textEmailAddress"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/confirm_card"
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/confirm_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
+
+        android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_card">
+        app:layout_constraintTop_toBottomOf="@+id/email_field">
+
 
         <EditText
             android:id="@+id/password_editText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="center_vertical"
             android:hint="password"
             android:inputType="textPassword"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/show_hide_link"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.v7.widget.CardView>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="105dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/if_camera_115759" />
+        <ImageButton
+            android:id="@+id/show_hide_link"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_action_remove_red_eye" />
+    </android.support.constraint.ConstraintLayout>
+
 
     <com.shobhitpuri.custombuttons.GoogleSignInButton
         android:id="@+id/google_signin_button"
@@ -197,11 +145,10 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:text="Sign in with Google"
         app:isDarkTheme="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -211,13 +158,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="56dp"
         android:text="OR"
-        android:textColor="#bdbdbd"
+        android:textColor="@color/background_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/confirm_field" />
 
     <View
         android:id="@+id/space"
@@ -225,10 +172,10 @@
         android:layout_height="1dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
-        android:background="#eeeeee"
+        android:background="@color/background_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/confirm_card"
+        app:layout_constraintStart_toStartOf="@+id/confirm_field"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <View
@@ -237,9 +184,9 @@
         android:layout_height="1dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:background="#eeeeee"
+        android:background="@color/background_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/confirm_card"
+        app:layout_constraintEnd_toEndOf="@+id/confirm_field"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />

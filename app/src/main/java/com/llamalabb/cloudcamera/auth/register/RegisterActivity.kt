@@ -4,8 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
 import android.text.method.PasswordTransformationMethod
+import android.view.View
 import android.view.View.*
 import android.widget.ImageView
 import android.widget.Toast
@@ -25,18 +25,23 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
 
     override var presenter: AuthContract.RegisterPresenter = RegisterPresenter(this)
 
+    private lateinit var complexityIndicators: List<View>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        complexityIndicators = listOf(img_has_length, img_has_digit, img_has_lower, img_has_upper, img_has_spchr)
         setClickListeners()
         setOnEditTextListener()
+        presenter.onStart()
     }
 
     private fun setClickListeners(){
-        login_frame.setOnClickListener{ showLoginView() }
-        show_hide_link.setOnClickListener{ presenter.handleShowLinkClicked() }
-        register_button.setOnClickListener{ registerButtonClicked() }
-        google_signin_button.setOnClickListener{ startGoogleSignIn() }
+        show_hide_password.setOnClickListener { presenter.setPasswordVisibility() }
+        show_hide_confirm.setOnClickListener { presenter.setPasswordVisibility() }
+        register_button.setOnClickListener { registerButtonClicked() }
+        register_text.setOnClickListener { registerButtonClicked() }
+        google_signin_button.setOnClickListener { startGoogleSignIn() }
     }
 
     override fun showLoginView(){
@@ -56,17 +61,14 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
         Utils.showMessageShort(this, "Verification Email Sent")
     }
 
+    override fun showPassword() {
+        password_editText.setRegularText()
+        confirm_editText.setRegularText()
+    }
 
-    override fun showHidePasswordText() {
-        if(show_hide_link.text == "show") {
-            show_hide_link.text = "hide"
-            password_editText.transformationMethod = null
-            confirm_editText.transformationMethod = null
-        } else {
-            show_hide_link.text = "show"
-            password_editText.transformationMethod = PasswordTransformationMethod()
-            confirm_editText.transformationMethod = PasswordTransformationMethod()
-        }
+    override fun hidePassword() {
+        password_editText.setPasswordText()
+        confirm_editText.setPasswordText()
     }
 
     override fun showComplexityStatus(complexityParam: ComplexityParams, isComplex: Boolean){
@@ -82,30 +84,31 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     private fun setImgComplexity(img: ImageView, isComplex: Boolean){
         when(isComplex){
             true -> img.setImageDrawable(ContextCompat
-                    .getDrawable(applicationContext,R.drawable.green_check_mark))
+                    .getDrawable(applicationContext,R.drawable.ic_action_valid))
             else -> img.setImageDrawable(ContextCompat
-                    .getDrawable(applicationContext,R.drawable.red_x))
+                    .getDrawable(applicationContext,R.drawable.ic_action_invalid))
         }
 
     }
 
-    override fun showEmailValidity(isValidEmail: Boolean){
-        showFieldValidity(email_card, isValidEmail)
+    override fun showEmailValidity(isValidEmail: Boolean, isEmpty: Boolean){
+            showFieldValidity(email_field, isEmpty, isValidEmail)
     }
 
-    override fun showConfirmValidity(isConfirmEqual: Boolean){
-        showFieldValidity(confirm_card, isConfirmEqual)
+    override fun showConfirmValidity(isConfirmEqual: Boolean, isEmpty: Boolean){
+            showFieldValidity(confirm_field, isEmpty, isConfirmEqual)
     }
 
-    override fun showPasswordValidity(isPasswordValid: Boolean){
-        showFieldValidity(password_card, isPasswordValid)
+    override fun showPasswordValidity(isPasswordValid: Boolean, isEmpty:Boolean){
+            showFieldValidity(password_field, isEmpty, isPasswordValid)
     }
 
-    private fun showFieldValidity(cardView: CardView, isValid: Boolean){
-        if(isValid)
-            cardView.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.valid)
-        else
-            cardView.cardBackgroundColor = ContextCompat.getColorStateList(applicationContext,R.color.invalid)
+    private fun showFieldValidity(view: View, isEmpty: Boolean, isValid: Boolean){
+        when {
+            isEmpty -> view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text)
+            isValid -> view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text_valid)
+            else -> view.background = ContextCompat.getDrawable(this, R.drawable.rounded_edit_text_invalid)
+        }
     }
 
     private fun registerButtonClicked() {
@@ -118,12 +121,27 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     private fun setOnEditTextListener(){
-        password_editText.setSimpleOnTextChangedListener{ presenter.checkPasswordComplexityParams(it) }
-        confirm_editText.setSimpleOnTextChangedListener { presenter.checkConfirmIsEqual(password_editText.asString(), it) }
-        email_editText.setSimpleOnTextChangedListener{ presenter.checkEmailValidity(it) }
-        password_editText.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
-            pw_complexity_frame.apply{ visibility = if (hasFocus) VISIBLE else INVISIBLE }
+        password_editText.setSimpleOnTextChangedListener{
+            presenter.checkPasswordComplexityParams(it)
+            presenter.checkConfirmIsEqual(it , confirm_editText.asString())
         }
+        confirm_editText.setSimpleOnTextChangedListener {
+            presenter.checkConfirmIsEqual(password_editText.asString(), it)
+        }
+        email_editText.setSimpleOnTextChangedListener{
+            presenter.checkEmailValidity(it)
+        }
+        password_editText.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+            presenter.setPasswordComplexityIndicators(hasFocus)
+        }
+    }
+
+    override fun hidePasswordComplexityIndicators() {
+        complexityIndicators.forEach { it.visibility = View.INVISIBLE }
+    }
+
+    override fun showPasswordComplexityIndicators() {
+        complexityIndicators.forEach { it.visibility = View.VISIBLE }
     }
 
     private fun startGoogleSignIn() {

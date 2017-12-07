@@ -30,7 +30,7 @@ class AddPhotoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_add_photo, container, false)
-        view.gallery_button.setOnClickListener{callBack.launchGallery()}
+        view.gallery_button.setOnClickListener{ callBack.launchGallery() }
         return view
     }
 

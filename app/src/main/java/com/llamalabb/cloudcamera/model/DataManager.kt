@@ -1,6 +1,5 @@
 package com.llamalabb.cloudcamera.model
 
-import android.media.Image
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +17,6 @@ object DataManager {
     private val db = FirebaseDatabase.getInstance()
     private val dbRef = db.reference
     private val dbUserImagesRef = dbRef.child("users").child(user?.uid).child("images")
-
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
 
