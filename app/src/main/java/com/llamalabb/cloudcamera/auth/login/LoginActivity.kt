@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.llamalabb.cloudcamera.auth.username.CreateUsernameActivity
 import com.llamalabb.cloudcamera.ktfiles.asString
 import com.llamalabb.cloudcamera.ktfiles.setPasswordText
 import com.llamalabb.cloudcamera.ktfiles.setRegularText
@@ -61,6 +62,11 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
 
     override fun showFailure(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showCreateUsernameUI(){
+        startActivity(Intent(this, CreateUsernameActivity::class.java))
+        finish()
     }
 
     override fun showSuccess() {

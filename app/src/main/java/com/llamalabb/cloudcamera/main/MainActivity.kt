@@ -21,7 +21,7 @@ import permissions.dispatcher.RuntimePermissions
 
 
 @RuntimePermissions
-class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolder {
+class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolder{
 
     private lateinit var adapterViewPager: FragmentPagerAdapter
 
@@ -31,9 +31,6 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        FirebaseAuth.getInstance().currentUser?.let{ user ->
-        } ?: startLoginActivity()
 
         bnve.enableAnimation(false)
         bnve.enableShiftingMode(false)
@@ -53,7 +50,6 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
     override fun logout() {
         FirebaseAuth.getInstance().signOut()
         startLoginActivity()
-        finish()
     }
 
     override fun launchGallery() {

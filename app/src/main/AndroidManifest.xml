@@ -13,17 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity">
+
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".main.MainActivity"/>
         <activity android:name=".auth.login.LoginActivity" />
         <activity android:name=".auth.register.RegisterActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
-        <activity android:name=".ChooseUsernameActivity"></activity>
+        <activity android:name=".auth.username.CreateUsernameActivity" />
+
     </application>
 
 </manifest>
