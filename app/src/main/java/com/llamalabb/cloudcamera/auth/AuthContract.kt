@@ -20,6 +20,7 @@ interface AuthContract {
         interface Login: AuthView, BaseView<LoginPresenter>{
             fun loginButtonClicked()
             fun showRegisterView()
+            fun showCreateUsernameUI()
         }
 
         interface Register: AuthView, BaseView<RegisterPresenter>{

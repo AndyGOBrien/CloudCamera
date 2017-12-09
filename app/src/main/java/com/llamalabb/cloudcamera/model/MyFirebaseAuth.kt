@@ -59,7 +59,8 @@ object MyFirebaseAuth {
     }
 
     fun isUserVerified(user: FirebaseUser) : Boolean {
-        return user.isEmailVerified
+        //return user.isEmailVerified
+        return true
     }
 
     fun createAccount(email: String, password: String, callBack: RegisterCallBack){
@@ -78,17 +79,17 @@ object MyFirebaseAuth {
     }
 
     fun sendVerificationEmail(user: FirebaseUser, callBack:RegisterCallBack){
-        user.sendEmailVerification().addOnCompleteListener {
-            if(it.isSuccessful){
-                logoutCurrentUser()
-                callBack.verificationEmailSendSuccess()
-            } else {
-                it.exception?.message?.let{
-                    callBack.verificationEmailSendFailure(it)
-                } ?: callBack.verificationEmailSendFailure("Email Verification send failure")
-
-            }
-        }
+//        user.sendEmailVerification().addOnCompleteListener {
+//            if(it.isSuccessful){
+//                logoutCurrentUser()
+//                callBack.verificationEmailSendSuccess()
+//            } else {
+//                it.exception?.message?.let{
+//                    callBack.verificationEmailSendFailure(it)
+//                } ?: callBack.verificationEmailSendFailure("Email Verification send failure")
+//
+//            }
+//        }
     }
 
     fun authWithGoogle(acct: GoogleSignInAccount, callBack: GoogleAuthCallBack){

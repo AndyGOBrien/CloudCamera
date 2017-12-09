@@ -7,4 +7,12 @@ import com.google.firebase.database.IgnoreExtraProperties
  */
 
 @IgnoreExtraProperties
-data class MyImage(val url: String? = null)
+data class MyImage(
+        val id: String = "",
+        val url: String = "",
+        val owner: String? = "",
+        val upvote_count: Int = 1,
+        val downvotes_count: Int = 0,
+        val upvotes: HashMap<String?, Boolean> = hashMapOf(Pair(owner, true)),
+        val timestamp: Long = System.currentTimeMillis()
+)

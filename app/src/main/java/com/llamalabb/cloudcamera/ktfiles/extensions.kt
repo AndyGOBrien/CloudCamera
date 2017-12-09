@@ -26,7 +26,8 @@ fun EditText.setSimpleOnTextChangedListener(listener : (text: CharSequence) -> U
     this.addTextChangedListener(TextWatcherFactory().create(listener))
 }
 
-fun EditText.asString() = this.text.toString()
+fun EditText.asString() = this.text.toString().trim()
+fun EditText.asStringLower() = this.asString().toLowerCase()
 fun EditText.hasText() = !this.text.isNullOrEmpty()
 fun EditText.setCursorEnd() = this.setSelection(this.text.length)
 fun EditText.setRegularText(){

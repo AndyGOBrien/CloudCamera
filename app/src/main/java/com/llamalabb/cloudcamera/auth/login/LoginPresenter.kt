@@ -4,6 +4,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.llamalabb.cloudcamera.auth.AuthContract
 import com.llamalabb.cloudcamera.auth.AuthContract.AuthView
 import com.llamalabb.cloudcamera.auth.AuthPresenter
+import com.llamalabb.cloudcamera.model.DataManager
 import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 
 /**
@@ -12,10 +13,15 @@ import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 class LoginPresenter(private val loginView: AuthView.Login) :
         AuthContract.LoginPresenter,
         AuthPresenter(loginView),
-        MyFirebaseAuth.LoginCallBack{
+        MyFirebaseAuth.LoginCallBack,
+        DataManager.HasUsernameCallBack {
+
+    override fun hasUsernameChecked(hasUsername: Boolean) {
+        if(hasUsername) loginView.showSuccess() else loginView.showCreateUsernameUI()
+    }
 
     override fun accountLoginSuccessful() {
-        loginView.showSuccess()
+        DataManager.hasUsername(this)
     }
 
     override fun accountLoginFailure(msg: String?) {
