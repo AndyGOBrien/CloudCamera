@@ -12,7 +12,6 @@ import com.llamalabb.cloudcamera.EqualSpaceItemDecoration
 import com.llamalabb.cloudcamera.R
 import com.llamalabb.cloudcamera.ktfiles.loadImage
 import com.llamalabb.cloudcamera.model.DataManager
-import com.llamalabb.cloudcamera.model.MyImage
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.android.synthetic.main.fragment_gallery.view.*
 
@@ -32,7 +31,7 @@ class GalleryFragment : Fragment(), DataManager.DMCallBack{
         page = arguments.getInt("pageNum", page)
         title = arguments.getString("title")
 
-        DataManager.buildListener(this)
+        DataManager.userGalleryListener(this)
 
 
     }
