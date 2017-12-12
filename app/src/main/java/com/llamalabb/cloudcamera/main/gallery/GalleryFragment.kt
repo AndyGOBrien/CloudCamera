@@ -47,7 +47,7 @@ class GalleryFragment : Fragment(), DataManager.DMCallBack{
     }
 
     override fun dataSetChanged() {
-        gallery_recycler.adapter.notifyDataSetChanged()
+        gallery_recycler?.let{ it.adapter.notifyDataSetChanged() }
     }
 
 

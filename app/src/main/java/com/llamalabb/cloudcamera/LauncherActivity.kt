@@ -34,7 +34,7 @@ class LauncherActivity : AppCompatActivity(), DataManager.HasUsernameCallBack {
         loading_icon.animation?.let{
             loading_icon.clearAnimation()
         }
-}
+    }
 
     private fun startMainActivity(){
         startActivity(Intent(this, MainActivity::class.java))
