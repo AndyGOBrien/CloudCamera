@@ -30,6 +30,8 @@ class RegisterPresenter(private val registerView: AuthView.Register) :
 
     override fun accountCreationSuccessful() {
         registerView.showSuccess()
+        MyFirebaseAuth.logoutCurrentUser()
+        registerView.showLoginView()
     }
 
 

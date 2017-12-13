@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
     }
 
     override fun showSuccess() {
-        Utils.showMessageShort(this, "Account Created")
+        Utils.showMessageShort(this, "Account Created, Please Verify Email")
     }
 
     override fun showVerificationEmailSent() {

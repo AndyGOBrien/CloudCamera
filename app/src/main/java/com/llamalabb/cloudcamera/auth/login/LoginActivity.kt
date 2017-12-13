@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.llamalabb.cloudcamera.LauncherActivity
 import com.llamalabb.cloudcamera.auth.username.CreateUsernameActivity
 import com.llamalabb.cloudcamera.ktfiles.asString
 import com.llamalabb.cloudcamera.ktfiles.setPasswordText
@@ -72,7 +73,7 @@ class LoginActivity : AppCompatActivity(), AuthContract.AuthView.Login {
     override fun showSuccess() {
         FirebaseAuth.getInstance().currentUser?.let{ user ->
             Toast.makeText(this, "Logged in as " + user.email, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LauncherActivity::class.java))
             finish()
         } ?: showFailure("Unknown Login Error")
     }
