@@ -98,18 +98,14 @@ object DataManager {
         dbUserImagesRef.addValueEventListener(userImagesListener)
     }
 
-    fun voteListListener(){
-        val newImageRef = dbImagesRef.limitToFirst(20)
+    private fun voteListListener(){
+        val newImageRef = dbImagesRef.limitToLast(50)
         val voteImagesListener = object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 voteList.clear()
                 snapshot.children.forEach{
                     val value = it.getValue(MyImage::class.java)
-                    value?.let{
-                        if(!it.downvotes.containsKey(user?.uid) || !it.upvotes.containsKey(user?.uid)){
-                            voteList.add(it)
-                        }
-                    }
+                    value?.let{ voteList.add(it) }
                 }
             }
             override fun onCancelled(dbError: DatabaseError) { Log.d(TAG, dbError.message) }
@@ -118,11 +114,11 @@ object DataManager {
     }
 
     fun voteImageUp(imageId: String){
-         dbImagesRef.child(imageId).child("upvotes").child(user?.uid).setValue("true")
+         dbImagesRef.child(imageId).child("upvotes").child(user?.uid).setValue(true)
     }
 
     fun voteImageDown(imageId: String){
-        dbImagesRef.child(imageId).child("downvotes").child(user?.uid).setValue("true")
+        dbImagesRef.child(imageId).child("downvotes").child(user?.uid).setValue(true)
     }
 
 }

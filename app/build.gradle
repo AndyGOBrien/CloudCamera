@@ -63,6 +63,7 @@ dependencies {
     }
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
 
+    kapt 'com.mindorks:placeholderview:0.7.1'
     kapt "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
     kapt 'com.github.bumptech.glide:compiler:4.2.0'
 }

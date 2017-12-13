@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:text="Please enter a unique username"
         android:textSize="18sp"
         android:textStyle="bold"
