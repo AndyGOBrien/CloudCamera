@@ -10,6 +10,9 @@ import com.google.firebase.storage.FirebaseStorage
  * Created by andy on 12/1/17.
  */
 object DataManager {
+
+    private val TAG = "DataManager"
+
     private val user = FirebaseAuth.getInstance().currentUser
 
     private val db = FirebaseDatabase.getInstance()
@@ -22,6 +25,11 @@ object DataManager {
     private val storageRef = storage.reference
 
     val images = ArrayList<String>()
+    val voteList = ArrayList<MyImage>()
+
+    init{
+        voteListListener()
+    }
 
     interface DMCallBack{
         fun dataSetChanged()
@@ -74,14 +82,13 @@ object DataManager {
                 .addOnSuccessListener { callBack.usernameSetSuccess(displayNameTrim) }
     }
 
-    fun buildListener(callBack: DMCallBack){
+    fun userGalleryListener(callBack: DMCallBack){
         val userImagesListener = object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 images.clear()
                 dataSnapshot.children.forEach {
                     images.add(it.value as String)
-                    Log.d("Image", "image")
                 }
                 callBack.dataSetChanged()
             }
@@ -90,4 +97,28 @@ object DataManager {
         dbUserImagesRef.addListenerForSingleValueEvent(userImagesListener)
         dbUserImagesRef.addValueEventListener(userImagesListener)
     }
+
+    private fun voteListListener(){
+        val newImageRef = dbImagesRef.limitToLast(50)
+        val voteImagesListener = object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                voteList.clear()
+                snapshot.children.forEach{
+                    val value = it.getValue(MyImage::class.java)
+                    value?.let{ voteList.add(it) }
+                }
+            }
+            override fun onCancelled(dbError: DatabaseError) { Log.d(TAG, dbError.message) }
+        }
+        newImageRef.addValueEventListener(voteImagesListener)
+    }
+
+    fun voteImageUp(imageId: String){
+         dbImagesRef.child(imageId).child("upvotes").child(user?.uid).setValue(true)
+    }
+
+    fun voteImageDown(imageId: String){
+        dbImagesRef.child(imageId).child("downvotes").child(user?.uid).setValue(true)
+    }
+
 }

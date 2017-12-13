@@ -30,3 +30,10 @@ exports.countUpvotes = functions.database.ref('/images/{imageID}/upvotes').onWri
 exports.countDownvotes = functions.database.ref('/images/{imageID}/downvotes').onWrite(event => {
   return event.data.ref.parent.child('downvote_count').set(event.data.numChildren());
 });
+
+exports.userUpvotedimages = functions.database.ref('/images/{imageID}/upvotes/{userID}').onCreate(event => {
+	const original = event.data.val();
+	const UID = event.params.userID;
+	const imageID = event.params.imageID;
+	return event.data.ref.parent.parent.parent.child('users').child(UID).child('upvotes').child(imageID).set("true");
+});

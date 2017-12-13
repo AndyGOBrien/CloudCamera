@@ -59,7 +59,7 @@ object MyFirebaseAuth {
     }
 
     fun isUserVerified(user: FirebaseUser) : Boolean {
-        //return user.isEmailVerified
+        //return User.isEmailVerified
         return true
     }
 
@@ -79,7 +79,7 @@ object MyFirebaseAuth {
     }
 
     fun sendVerificationEmail(user: FirebaseUser, callBack:RegisterCallBack){
-//        user.sendEmailVerification().addOnCompleteListener {
+//        User.sendEmailVerification().addOnCompleteListener {
 //            if(it.isSuccessful){
 //                logoutCurrentUser()
 //                callBack.verificationEmailSendSuccess()
