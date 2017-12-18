@@ -10,10 +10,10 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class MyImage(
         val id: String = "",
         val url: String = "",
-        val owner: String? = "",
+        val owner_id: String? = "",
         val upvote_count: Int = 1,
         val downvote_count: Int = 0,
-        val upvotes: HashMap<String?, Boolean> = hashMapOf(Pair(owner, true)),
+        val upvotes: HashMap<String?, Boolean> = hashMapOf(Pair(owner_id, true)),
         val downvotes: HashMap<String?, Boolean> = hashMapOf(),
         val timestamp: Long = System.currentTimeMillis()
 )

@@ -12,47 +12,44 @@ import com.llamalabb.cloudcamera.EqualSpaceItemDecoration
 import com.llamalabb.cloudcamera.R
 import com.llamalabb.cloudcamera.ktfiles.loadImage
 import com.llamalabb.cloudcamera.model.DataManager
-import kotlinx.android.synthetic.main.fragment_gallery.*
-import kotlinx.android.synthetic.main.fragment_gallery.view.*
+import kotlinx.android.synthetic.main.fragment_gallery_recycler_view.*
+import kotlinx.android.synthetic.main.fragment_gallery_recycler_view.view.*
 
 
 /**
  * Created by andy on 12/1/17.
  */
-class GalleryFragment : Fragment(), DataManager.DMCallBack{
+class UserImagesGalleryFragment : Fragment(), DataManager.DMCallBack{
 
 
     private var page: Int = 1
     private var title: String = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        page = arguments.getInt("pageNum", page)
+        page = arguments.getInt("pageNum", 0)
         title = arguments.getString("title")
 
         DataManager.userGalleryListener(this)
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_gallery, container, false)
+        val view = inflater.inflate(R.layout.fragment_gallery_recycler_view, container, false)
         val itemDecoration = EqualSpaceItemDecoration(context, R.dimen.item_spacing)
-        view.gallery_recycler.layoutManager = GridLayoutManager(context, 2)
-        view.gallery_recycler.addItemDecoration(itemDecoration)
-        view.gallery_recycler.adapter = GalleryRecyclerAdapter(DataManager.images)
+        view.gallery_recycler_view.layoutManager = GridLayoutManager(context, 2)
+        view.gallery_recycler_view.addItemDecoration(itemDecoration)
+        view.gallery_recycler_view.adapter = GalleryRecyclerAdapter(DataManager.userImages)
         return view
     }
 
     override fun dataSetChanged() {
-        gallery_recycler?.let{ it.adapter.notifyDataSetChanged() }
+        gallery_recycler_view.adapter.notifyDataSetChanged()
     }
 
 
     companion object {
-        fun newInstance(pageNum: Int, title: String) : GalleryFragment {
-            val galFrag = GalleryFragment()
+        fun newInstance(pageNum: Int, title: String) : UserImagesGalleryFragment {
+            val galFrag = UserImagesGalleryFragment()
             val args = Bundle()
             args.putInt("pageNum", pageNum)
             args.putString("title", title)

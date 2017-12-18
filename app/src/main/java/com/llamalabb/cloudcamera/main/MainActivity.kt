@@ -16,15 +16,19 @@ import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.llamalabb.cloudcamera.main.gallery.GalleryFragment
+import com.llamalabb.cloudcamera.LauncherActivity
+import com.llamalabb.cloudcamera.main.gallery.GalleryTabFragment
 import com.llamalabb.cloudcamera.main.home.HomeFragment
-import com.llamalabb.cloudcamera.main.photo.AddPhotoFragment
 import com.llamalabb.cloudcamera.main.profile.ProfileFragment
 import com.llamalabb.cloudcamera.model.DataManager
+import com.llamalabb.cloudcamera.model.MyFirebaseAuth
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.RuntimePermissions
+import android.app.AlarmManager
+import android.content.Context.ALARM_SERVICE
+import android.app.PendingIntent
+import android.content.Context
 
 
 @RuntimePermissions
@@ -41,7 +45,13 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bnve.enableAnimation(false)
+        setupBottomNavBar()
+        replaceFragment(HomeFragment.newInstance(0, "Home"))
+        add_photo_fab.setOnClickListener { launchGalleryForResultWithPermissionCheck() }
+
+    }
+
+    private fun setupBottomNavBar(){
         bnve.enableShiftingMode(false)
         bnve.enableItemShiftingMode(false)
         bnve.setTextVisibility(false)
@@ -51,31 +61,30 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
         }
     }
 
-    private fun loadFragment(id: Int){
-        var fragment: Fragment = when(id){
-            R.id.menu_home -> HomeFragment.newInstance(0,"Home")
-            R.id.menu_gallery -> GalleryFragment.newInstance(1, "Gallery")
-            R.id.menu_add_photo -> AddPhotoFragment.newInstance(2, "Add Photo")
-            R.id.menu_profile -> ProfileFragment.newInstance(3, "Profile")
-            else -> return
-        }
+    private fun replaceFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()
     }
 
-    private fun startLoginActivity(){
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
+    private fun loadFragment(id: Int){
+        var fragment: Fragment = when(id){
+            R.id.menu_home -> HomeFragment.newInstance(0,"Home")
+            R.id.menu_gallery -> GalleryTabFragment.newInstance(1, "Gallery")
+            R.id.menu_profile -> ProfileFragment.newInstance(2, "Profile")
+            else -> return
+        }
+        replaceFragment(fragment)
     }
 
     override fun logout() {
-        FirebaseAuth.getInstance().signOut()
-        startLoginActivity()
-    }
-
-    override fun launchGallery() {
-        launchGalleryForResultWithPermissionCheck()
+        val intent = Intent(this, LauncherActivity::class.java)
+        intent.putExtra("isLoggedOut", true)
+        val PendingIntentId = 123456
+        val PendingIntent = PendingIntent.getActivity(this, PendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val mgr = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, PendingIntent)
+        System.exit(0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -94,17 +103,17 @@ class MainActivity : AppCompatActivity(), FragmentCallBackContract.FragmentHolde
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun launchGalleryForResult(){
 
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = Intent.ACTION_GET_CONTENT
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_PHOTO)
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_PHOTO)
 
 
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setFixAspectRatio(true)
-                .setAspectRatio(9,10)
-                .start(this)
+//        CropImage.activity()
+//                .setGuidelines(CropImageView.Guidelines.ON)
+//                .setFixAspectRatio(true)
+//                .setAspectRatio(9,10)
+//                .start(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

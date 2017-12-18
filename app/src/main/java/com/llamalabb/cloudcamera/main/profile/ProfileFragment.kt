@@ -15,7 +15,6 @@ class ProfileFragment : Fragment() {
     private var page: Int = 3
     private var title: String = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         page = arguments.getInt("pageNum", page)
@@ -27,7 +26,6 @@ class ProfileFragment : Fragment() {
 
         return view
     }
-
 
     companion object {
         fun newInstance(pageNum: Int, title: String) : ProfileFragment {

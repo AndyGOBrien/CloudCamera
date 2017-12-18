@@ -18,22 +18,31 @@ exports.setFlatUsername = functions.database.ref('/users/{userID}/username').onW
 exports.imageListSyncToUser = functions.database.ref('/images/{imageID}').onWrite(event => {
 	const original = event.data.val();
 	const imageID = event.params.imageID;
-	const UID = event.data.child('owner').val();
+	const UID = event.data.child('owner_id').val();
 	const imageURL = event.data.child('url').val();
 	return event.data.ref.parent.parent.child('users').child(UID).child('imagesowned').child(imageID).set(imageURL);
 });
 
 exports.countUpvotes = functions.database.ref('/images/{imageID}/upvotes').onWrite(event => {
-  return event.data.ref.parent.child('upvote_count').set(event.data.numChildren());
+ 	return event.data.ref.parent.child('upvote_count').set(event.data.numChildren()).then;
 });
 
 exports.countDownvotes = functions.database.ref('/images/{imageID}/downvotes').onWrite(event => {
-  return event.data.ref.parent.child('downvote_count').set(event.data.numChildren());
+ 	return event.data.ref.parent.child('downvote_count').set(event.data.numChildren());
 });
 
-exports.userUpvotedimages = functions.database.ref('/images/{imageID}/upvotes/{userID}').onCreate(event => {
-	const original = event.data.val();
-	const UID = event.params.userID;
-	const imageID = event.params.imageID;
-	return event.data.ref.parent.parent.parent.child('users').child(UID).child('upvotes').child(imageID).set("true");
-});
+// exports.calculatePopularityOnUpvote = functions.database.ref('/images/{imageID}/upvote_count').onWrite(event => {
+// 	const upvote_count = event.data.val();
+// 	const imageID = event.params.imageID;
+// 	const downvote_count = event.data.adminRef.root.child('images').child(imageID).child('downvote_count').val();
+// 	const popularity = upvote_count/downvote_count;
+// 	return event.data.ref.parent.child('popularity').set(popularity);
+// });
+
+// exports.calculatePopularityOnDownvote = functions.database.ref('/images/{imageID}/downvote_count').onWrite(event => {
+// 	const downvote_count = event.data.val();
+// 	const imageID = event.params.imageID;
+// 	const upvote_count = event.data.adminRef.parent.child('upvote_count').val();
+// 	const popularity = upvote_count/downvote_count;
+// 	return event.data.ref.parent.child('popularity').set(popularity);
+// });
