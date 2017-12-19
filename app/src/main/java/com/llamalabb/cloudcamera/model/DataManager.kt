@@ -27,10 +27,12 @@ object DataManager{
     val userImages = ArrayList<String>()
     val voteList = ArrayList<MyImage>()
     val popularList = ArrayList<MyImage>()
+    var userData: User? = User()
 
     init{
         voteListListener()
         popularListListener()
+        userDataListener()
     }
 
     interface DMCallBack{
@@ -49,7 +51,12 @@ object DataManager{
     fun uploadFileToStorage(fileEx: String, uri: Uri){
         val imgRef = storageRef.child("users/" + user?.uid + "/" + "images/" + System.currentTimeMillis() + "." + fileEx)
         imgRef.putFile(uri).addOnSuccessListener {
-            val image = MyImage(id=dbRef.push().key, url=it.downloadUrl.toString(), owner_id=user?.uid)
+            val image = MyImage(
+                    id=dbRef.push().key,
+                    url=it.downloadUrl.toString(),
+                    owner_id=user?.uid,
+                    owner_dn = userData?.displayname
+            )
             uploadImageToDatabase(image)
         }
     }
@@ -130,6 +137,19 @@ object DataManager{
 
         }
         popularImagesRef.addValueEventListener(popularImagesListener)
+    }
+
+    private fun userDataListener(){
+        val userDataListener = object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userData = snapshot.getValue(User::class.java)
+            }
+
+        }
+
+        dbUserRef.addListenerForSingleValueEvent(userDataListener)
+        dbUserRef.addValueEventListener(userDataListener)
     }
 
     fun voteImageUp(imageId: String){

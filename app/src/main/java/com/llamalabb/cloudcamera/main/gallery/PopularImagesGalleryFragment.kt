@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.llamalabb.cloudcamera.EqualSpaceItemDecoration
 import com.llamalabb.cloudcamera.R
 import com.llamalabb.cloudcamera.ktfiles.loadImage
@@ -58,23 +59,25 @@ class PopularImagesGalleryFragment : Fragment(), DataManager.DMCallBack{
         }
     }
 
-    class GalleryRecyclerAdapter(val imgUrls: ArrayList<MyImage>)
+    class GalleryRecyclerAdapter(val images: ArrayList<MyImage>)
         : RecyclerView.Adapter<GalleryRecyclerAdapter.MyViewHolder>() {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.image.loadImage(imgUrls[position].url)
+            holder.image.loadImage(images[position].url)
+            holder.user.text = images[position].owner_dn
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image_with_metadata, parent, false)
             return MyViewHolder(view)
         }
 
         override fun getItemCount(): Int {
-            return imgUrls.size
+            return images.size
         }
 
         class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
             val image = view.findViewById<ImageView>(R.id.image_view)
+            val user = view.findViewById<TextView>(R.id.user_text)
         }
     }
 }

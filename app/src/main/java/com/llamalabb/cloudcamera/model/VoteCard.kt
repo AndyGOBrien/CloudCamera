@@ -5,7 +5,9 @@ import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.llamalabb.cloudcamera.R
+import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
+import com.mindorks.placeholderview.SwipeViewBuilder
 import com.mindorks.placeholderview.annotations.Layout
 import com.mindorks.placeholderview.annotations.NonReusable
 import com.mindorks.placeholderview.annotations.Resolve
@@ -33,6 +35,7 @@ class VoteCard(val context: Context, val image: MyImage, val swipeView: SwipePla
     private fun onSwipedOut(){
         Log.d("EVENT", "onSwipedOut")
         DataManager.voteImageDown(image.id)
+
     }
 
     @SwipeCancelState
@@ -54,5 +57,6 @@ class VoteCard(val context: Context, val image: MyImage, val swipeView: SwipePla
     @SwipeOutState
     private fun onSwipeOutState() {
         Log.d("EVENT", "onSwipeOutState")
+
     }
 }

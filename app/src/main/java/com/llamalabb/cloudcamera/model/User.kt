@@ -7,5 +7,7 @@ data class User(
         var firstname: String? = null,
         var lastname: String? = null,
         var username: String? = null,
-        var displayName: String? = null
+        var displayname: String? = null,
+        var emailaddress: String? = null,
+        var imagesowned: HashMap<String, String>? = null
 )
