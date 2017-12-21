@@ -16,5 +16,6 @@ data class MyImage(
         val downvote_count: Int = 0,
         val upvotes: HashMap<String?, Boolean> = hashMapOf(Pair(owner_id, true)),
         val downvotes: HashMap<String?, Boolean> = hashMapOf(),
-        val timestamp: Long = System.currentTimeMillis()
+        val timestamp: Long = System.currentTimeMillis(),
+        val servertimestamp: String? = null
 )

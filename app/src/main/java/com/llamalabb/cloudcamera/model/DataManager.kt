@@ -55,7 +55,8 @@ object DataManager{
                     id=dbRef.push().key,
                     url=it.downloadUrl.toString(),
                     owner_id=user?.uid,
-                    owner_dn = userData?.displayname
+                    owner_dn = userData?.displayname,
+                    servertimestamp = ServerValue.TIMESTAMP["date"]
             )
             uploadImageToDatabase(image)
         }

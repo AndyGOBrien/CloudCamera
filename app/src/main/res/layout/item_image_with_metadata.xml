@@ -3,19 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="180dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view"
+            app:srcCompat="@mipmap/ic_upvote" />
 
         <ImageView
             android:id="@+id/image_view"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginEnd="-1dp"
             android:elevation="0dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,32 +48,37 @@
             app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
         <TextView
-            android:id="@+id/details_text"
+            android:id="@+id/upvote_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="6dp"
-            android:text="placeholder"
+            android:layout_marginStart="4dp"
+            android:text="0"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_text" />
+            app:layout_constraintTop_toBottomOf="@+id/image_view"
+            app:srcCompat="@mipmap/ic_downvote" />
 
         <TextView
-            android:id="@+id/rating_text"
+            android:id="@+id/downvote_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="placeholder"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details_text" />
+            android:layout_marginEnd="4dp"
+            android:text="0"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

@@ -64,6 +64,8 @@ class PopularImagesGalleryFragment : Fragment(), DataManager.DMCallBack{
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.image.loadImage(images[position].url)
             holder.user.text = images[position].owner_dn
+            holder.downvoteCount.text = images[position].downvote_count.toString()
+            holder.upvoteCount.text = images[position].upvote_count.toString()
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -78,6 +80,8 @@ class PopularImagesGalleryFragment : Fragment(), DataManager.DMCallBack{
         class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
             val image = view.findViewById<ImageView>(R.id.image_view)
             val user = view.findViewById<TextView>(R.id.user_text)
+            val upvoteCount = view.findViewById<TextView>(R.id.upvote_count_text)
+            val downvoteCount = view.findViewById<TextView>(R.id.downvote_count_text)
         }
     }
 }

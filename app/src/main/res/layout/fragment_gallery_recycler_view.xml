@@ -3,8 +3,8 @@
     android:id="@+id/gallery_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:clipToPadding="false"
-    android:padding="@dimen/item_spacing"
-    android:layout_gravity="center">
+    android:padding="@dimen/item_spacing">
 
 </android.support.v7.widget.RecyclerView>
