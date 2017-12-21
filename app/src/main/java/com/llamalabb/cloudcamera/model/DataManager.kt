@@ -9,7 +9,7 @@ import com.google.firebase.storage.FirebaseStorage
 /**
  * Created by andy on 12/1/17.
  */
-object DataManager {
+object DataManager{
 
     private val TAG = "DataManager"
 
@@ -24,11 +24,15 @@ object DataManager {
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
 
-    val images = ArrayList<String>()
+    val userImages = ArrayList<String>()
     val voteList = ArrayList<MyImage>()
+    val popularList = ArrayList<MyImage>()
+    var userData: User? = User()
 
     init{
         voteListListener()
+        popularListListener()
+        userDataListener()
     }
 
     interface DMCallBack{
@@ -47,7 +51,13 @@ object DataManager {
     fun uploadFileToStorage(fileEx: String, uri: Uri){
         val imgRef = storageRef.child("users/" + user?.uid + "/" + "images/" + System.currentTimeMillis() + "." + fileEx)
         imgRef.putFile(uri).addOnSuccessListener {
-            val image = MyImage(id=dbRef.push().key,url=it.downloadUrl.toString(), owner=user?.uid)
+            val image = MyImage(
+                    id=dbRef.push().key,
+                    url=it.downloadUrl.toString(),
+                    owner_id=user?.uid,
+                    owner_dn = userData?.displayname,
+                    servertimestamp = ServerValue.TIMESTAMP["date"]
+            )
             uploadImageToDatabase(image)
         }
     }
@@ -86,9 +96,9 @@ object DataManager {
         val userImagesListener = object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                images.clear()
+                userImages.clear()
                 dataSnapshot.children.forEach {
-                    images.add(it.value as String)
+                    userImages.add(it.value as String)
                 }
                 callBack.dataSetChanged()
             }
@@ -111,6 +121,36 @@ object DataManager {
             override fun onCancelled(dbError: DatabaseError) { Log.d(TAG, dbError.message) }
         }
         newImageRef.addValueEventListener(voteImagesListener)
+    }
+
+    private fun popularListListener(){
+        val popularImagesRef = dbImagesRef.limitToLast(50).orderByChild("upvote_count")
+        val popularImagesListener = object: ValueEventListener{
+            override fun onCancelled(snapshot: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                popularList.clear()
+                snapshot.children.forEach{
+                    val value = it.getValue(MyImage::class.java)
+                    value?.let{ popularList.add(0, it) }
+                }
+            }
+
+        }
+        popularImagesRef.addValueEventListener(popularImagesListener)
+    }
+
+    private fun userDataListener(){
+        val userDataListener = object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userData = snapshot.getValue(User::class.java)
+            }
+
+        }
+
+        dbUserRef.addListenerForSingleValueEvent(userDataListener)
+        dbUserRef.addValueEventListener(userDataListener)
     }
 
     fun voteImageUp(imageId: String){

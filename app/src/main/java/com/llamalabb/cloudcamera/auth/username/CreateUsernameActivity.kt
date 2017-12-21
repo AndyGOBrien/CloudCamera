@@ -29,6 +29,7 @@ class CreateUsernameActivity : AppCompatActivity(), DataManager.UsernameAvailabl
         if(lowerUN.length >= 6 && lowerUN.matches(alphaDigitOnly)){
             DataManager.isUsernameAvailable(lowerUN, this)
         } else {
+            unlockUI()
             Utils.showMessageShort(this, "Invalid username, numbers and alpha characters only")
         }
     }

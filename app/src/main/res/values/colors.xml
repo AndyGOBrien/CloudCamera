@@ -11,4 +11,6 @@
     <color name="background_light">#e2f1f8</color>
     <color name="background_dark">#808e95</color>
     <color name="hyperlink">#3366BB</color>
+    <color name="downvote">#ff5252</color>
+    <color name="upvote">#69f0ae</color>
 </resources>

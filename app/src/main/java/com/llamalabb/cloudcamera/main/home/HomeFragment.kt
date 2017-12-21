@@ -40,8 +40,11 @@ class HomeFragment : Fragment() {
                 .setSwipeDecor(SwipeDecor()
                         .setPaddingTop(20)
                         .setRelativeScale(0.01f)
+                        .setSwipeRotationAngle(15)
                         .setSwipeInMsgLayoutId(R.layout.vote_swipe_in_msg_view)
-                        .setSwipeOutMsgLayoutId(R.layout.vote_swipe_out_msg_view))
+                        .setSwipeOutMsgLayoutId(R.layout.vote_swipe_out_msg_view)
+                        .isAnimateScale(true)
+                        .setRelativeScale(.2f))
 
 
 

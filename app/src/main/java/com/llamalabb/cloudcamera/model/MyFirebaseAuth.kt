@@ -1,18 +1,17 @@
 package com.llamalabb.cloudcamera.model
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.llamalabb.simplefirebaselogin.utils.Utils
+import javax.security.auth.Destroyable
 
 /**
  * Created by andy on 11/24/17.
  */
-object MyFirebaseAuth {
+object MyFirebaseAuth{
 
     const val RC_SIGN_IN = 9000
 

@@ -19,6 +19,12 @@ class LauncherActivity : AppCompatActivity(), DataManager.HasUsernameCallBack {
 
         startAnimation()
 
+        val isLoggedOut = intent.hasExtra("isLoggedOut")
+        if(isLoggedOut){
+            FirebaseAuth.getInstance().signOut()
+            startLoginActivity()
+        }
+
         FirebaseAuth.getInstance().currentUser?.let{
             DataManager.hasUsername(this)
         } ?: startLoginActivity()

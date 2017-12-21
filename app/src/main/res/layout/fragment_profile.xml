@@ -32,11 +32,12 @@
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#9e9e9e"
+                android:editable="true"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:hint="First Last"
-                android:textSize="14sp"
-                android:backgroundTint="#9e9e9e"/>
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -50,24 +51,28 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="email@domain.com"
                 android:inputType="textEmailAddress"
                 android:textSize="14sp" />
+
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="Username" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="hint"
                 android:inputType="textPersonName"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:editable="false" />
 
         </LinearLayout>
 
