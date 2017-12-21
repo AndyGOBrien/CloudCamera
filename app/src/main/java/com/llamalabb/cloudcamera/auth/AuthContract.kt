@@ -24,7 +24,6 @@ interface AuthContract {
         }
 
         interface Register: AuthView, BaseView<RegisterPresenter>{
-            fun showLoginView()
             fun showComplexityStatus(complexityParam: ComplexityParams, isComplex: Boolean)
             fun showEmailValidity(isValidEmail: Boolean, isEmpty: Boolean)
             fun showConfirmValidity(isConfirmEqual: Boolean, isEmpty: Boolean)

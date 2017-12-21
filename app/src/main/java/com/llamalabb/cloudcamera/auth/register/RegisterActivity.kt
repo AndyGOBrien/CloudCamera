@@ -44,17 +44,13 @@ class RegisterActivity : AppCompatActivity(), AuthContract.AuthView.Register {
         google_signin_button.setOnClickListener { startGoogleSignIn() }
     }
 
-    override fun showLoginView(){
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
-    }
-
     override fun showFailure(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun showSuccess() {
         Utils.showMessageShort(this, "Account Created, Please Verify Email")
+        finish()
     }
 
     override fun showVerificationEmailSent() {
