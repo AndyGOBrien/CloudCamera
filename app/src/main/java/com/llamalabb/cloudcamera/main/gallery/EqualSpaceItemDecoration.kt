@@ -1,4 +1,4 @@
-package com.llamalabb.cloudcamera
+package com.llamalabb.cloudcamera.main.gallery
 
 import android.content.Context
 import android.graphics.Rect
